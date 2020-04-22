@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -15,6 +15,8 @@ import { BsNavbarComponent } from './components/bs-navbar/bs-navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ import { LoginComponent } from './components/login/login.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
