@@ -7,13 +7,21 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 import { BsNavbarComponent } from './components/bs-navbar/bs-navbar.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProductsComponent } from './components/admin/products/products.component';
+import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, BsNavbarComponent, HomeComponent, ProductsComponent],
+  declarations: [
+    AppComponent,
+    BsNavbarComponent,
+    HomeComponent,
+    AdminProductsComponent,
+    LoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
