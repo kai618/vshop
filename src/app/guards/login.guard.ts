@@ -13,7 +13,7 @@ export class LoginGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     const mapAuth = map<firebase.User, boolean>((user) => {
       if (!user) return true;
-      this.router.navigate(['/']);
+      this.router.navigate(['/account']);
       return false;
     });
 

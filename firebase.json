@@ -1,5 +1,12 @@
 {
   "hosting": {
-    "public": "dist/vshop"
+    "public": "dist/vshop",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

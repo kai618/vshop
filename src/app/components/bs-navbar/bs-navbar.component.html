@@ -47,9 +47,16 @@
           <a
             ngbDropdownItem
             (click)="isMenuCollapsed = true"
+            routerLink="/account"
+            >Your Account</a
+          >
+          <a
+            ngbDropdownItem
+            (click)="isMenuCollapsed = true"
             routerLink="/admin/products"
             >Manage Products</a
           >
+
           <a ngbDropdownItem (click)="logout()" routerLink="">Log Out</a>
         </div>
       </li>
