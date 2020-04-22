@@ -13,12 +13,12 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     // FIXME: change to check if (user.isAdmin)
-    const mapAdmin = map<firebase.User, boolean>((user) => {
-      if (user) return true;
-      this.router.navigate(['/login']);
-      return false;
-    });
-
-    return mapAdmin(this.auth.user$);
+    return this.auth.user$.pipe(
+      map<firebase.User, boolean>((user) => {
+        if (true) return true;
+        this.router.navigate(['/']);
+        return false;
+      })
+    );
   }
 }

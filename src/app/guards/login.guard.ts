@@ -11,12 +11,12 @@ import { map } from 'rxjs/operators';
 export class LoginGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
   canActivate(): Observable<boolean> {
-    const mapAuth = map<firebase.User, boolean>((user) => {
-      if (!user) return true;
-      this.router.navigate(['/account']);
-      return false;
-    });
-
-    return mapAuth(this.auth.user$);
+    return this.auth.user$.pipe(
+      map<firebase.User, boolean>((user) => {
+        if (!user) return true;
+        this.router.navigate(['/account']);
+        return false;
+      })
+    );
   }
 }
