@@ -1,3 +1,25 @@
 .dropdown-toggle {
   cursor: pointer;
 }
+
+.navbar-brand {
+  position: relative;
+  padding: 0;
+  margin-right: 0;
+
+  .bg-img {
+    height: 46px;
+    width: 46px;
+    border-radius: 23px;
+    background-color: white;
+  }
+
+  img {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 46px;
+    object-fit: contain;
+    transition: 0.4s;
+  }
+}

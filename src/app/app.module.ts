@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AccountComponent } from './components/account/account.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { AccountComponent } from './components/account/account.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
