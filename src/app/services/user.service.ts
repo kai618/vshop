@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class UserService {
     }
   }
 
-  getRoles(uid: string) {
+  getRoles(uid: string): Observable<string[]> {
     try {
       return this.afs
         .collection('roles', (ref) => ref.where(uid, '==', true))
@@ -42,5 +43,12 @@ export class UserService {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  isAdmin(uid: string): Observable<boolean> {
+    if (uid === null) return of(null);
+    return this.getRoles(uid).pipe(
+      map<string[], boolean>((roles) => roles.includes('admin'))
+    );
   }
 }

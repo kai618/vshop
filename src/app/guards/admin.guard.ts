@@ -18,15 +18,11 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.auth.user$
+      .pipe(switchMap((user) => this.userSv.isAdmin(user.uid)))
       .pipe(
-        switchMap<firebase.User, Observable<any>>((user) => {
-          return this.userSv.getRoles(user.uid);
-        })
-      )
-      .pipe(
-        map<any, boolean>((roles) => {
-          console.log(roles);
-          if (roles.includes('admin')) return true;
+        map((val) => {
+          if (val) return true;
+          this.router.navigate(['/account']);
           return false;
         })
       );

@@ -53,12 +53,14 @@
             routerLink="/account"
             >Your Account</a
           >
-          <a
-            ngbDropdownItem
-            (click)="isMenuCollapsed = true"
-            routerLink="/admin/products"
-            >Manage Products</a
-          >
+          <ng-container *ngIf="isAdmin">
+            <a
+              ngbDropdownItem
+              (click)="isMenuCollapsed = true"
+              routerLink="/admin/products"
+              >Manage Products</a
+            >
+          </ng-container>
 
           <a ngbDropdownItem (click)="logout()" routerLink="">Log Out</a>
         </div>
