@@ -19,6 +19,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AccountComponent } from './components/account/account.component';
 import { UserService } from './services/user.service';
+import { ProductFormComponent } from './components/admin/product-form/product-form.component';
+import { CategoryService } from './services/category.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { UserService } from './services/user.service';
     AdminProductsComponent,
     LoginComponent,
     AccountComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,7 @@ import { UserService } from './services/user.service';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthService, AuthGuard, UserService],
+  providers: [AuthService, AuthGuard, UserService, CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
