@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light fixed-top shadow-sm py-1">
+<nav class="navbar navbar-expand-md navbar-light fixed-top py-1">
   <a class="navbar-brand" routerLink="/">
     <div class="bg-img"></div>
     <img src="../../../assets/vshop-logo.png" />
@@ -50,13 +50,14 @@
         ngbDropdown
         class="nav-item"
       >
-        <div ngbDropdownToggle>
-          <a class="d-md-none nav-link" href="#">{{ user.displayName }}</a>
-          <div
-            class="d-none d-md-block rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm"
-          >
-            <img class="rounded-circle" [src]="user.photoURL" />
-          </div>
+        <a ngbDropdownToggle class="d-md-none nav-link" href="#">{{
+          user.displayName
+        }}</a>
+        <div
+          ngbDropdownToggle
+          class="d-none d-md-block rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm"
+        >
+          <img class="rounded-circle" [src]="user.photoURL" />
         </div>
 
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">

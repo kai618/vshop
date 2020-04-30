@@ -4,7 +4,6 @@
 
 nav.navbar {
   background-color: #f0f3f4;
-  // box-shadow: 0px 1px 3px 1px rgba(220, 220, 220, 1);
 }
 
 .navbar-brand {
@@ -37,8 +36,10 @@ nav.navbar {
   max-width: 100%;
 }
 
-.dropdown-toggle::after {
-  display: none;
+@media (min-width: 768px) {
+  .dropdown-toggle::after {
+    display: none;
+  }
 }
 
 .dropdown-email {
