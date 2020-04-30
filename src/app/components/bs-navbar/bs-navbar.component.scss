@@ -2,6 +2,11 @@
   cursor: pointer;
 }
 
+nav.navbar {
+  background-color: #f0f3f4;
+  // box-shadow: 0px 1px 3px 1px rgba(220, 220, 220, 1);
+}
+
 .navbar-brand {
   position: relative;
   padding: 0;
@@ -22,4 +27,20 @@
     object-fit: contain;
     transition: 0.4s;
   }
+}
+
+.nav-avatar-wrapper {
+  height: 40px;
+  width: 40px;
+}
+.nav-avatar-wrapper img {
+  max-width: 100%;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-email {
+  font-size: 15px;
 }

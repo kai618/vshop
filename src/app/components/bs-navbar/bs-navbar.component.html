@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-md navbar-light fixed-top shadow-sm py-1">
   <a class="navbar-brand" routerLink="/">
     <div class="bg-img"></div>
     <img src="../../../assets/vshop-logo.png" />
@@ -6,12 +6,8 @@
   <button
     (click)="isMenuCollapsed = !isMenuCollapsed"
     class="navbar-toggler"
-    type="button"
     data-toggle="collapse"
     data-target="#bs-navbar"
-    aria-controls="bs-navbar"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -21,13 +17,23 @@
     class="collapse navbar-collapse"
     id="bs-navbar"
   >
+    <!-- left side -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/cart" (click)="isMenuCollapsed = true"
-          >Shopping Cart</a
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/" (click)="isMenuCollapsed = true"
+          >Home</a
         >
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/cart" (click)="isMenuCollapsed = true"
+          >Cart</a
+        >
+      </li>
+    </ul>
+    <!-- left side -->
 
+    <!-- right side -->
+    <ul class="navbar-nav ml-auto">
       <ng-template #loginLink>
         <li class="nav-item">
           <a
@@ -44,9 +50,21 @@
         ngbDropdown
         class="nav-item"
       >
-        <a ngbDropdownToggle class="nav-link">{{ user.displayName }}</a>
+        <div ngbDropdownToggle>
+          <a class="d-md-none nav-link" href="#">{{ user.displayName }}</a>
+          <div
+            class="d-none d-md-block rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm"
+          >
+            <img class="rounded-circle" [src]="user.photoURL" />
+          </div>
+        </div>
 
-        <div ngbDropdownMenu class="dropdown-menu">
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+          <div class="mx-4">
+            <b>{{ user.displayName }}</b>
+          </div>
+          <div class="dropdown-email mx-4">{{ user.email }}</div>
+          <div class="dropdown-divider"></div>
           <a
             ngbDropdownItem
             (click)="isMenuCollapsed = true"
@@ -66,5 +84,6 @@
         </div>
       </li>
     </ul>
+    <!-- right side -->
   </div>
 </nav>
