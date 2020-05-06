@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentData } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
 
 @Injectable({
@@ -42,39 +42,55 @@ export class UserService {
   }
 
   getRoles(uid: string): Observable<String[]> {
-    this.afs
-      .collectionGroup('role-users', (ref) => ref.where('active', '==', true))
-      .get()
-      .subscribe((qs) => qs.docs.forEach((doc) => console.log(doc.id)));
-
-    this.afs
+    return this.afs
       .collection('roles')
-      .snapshotChanges()
-      .pipe(
-        mergeMap((actions) =>
-          forkJoin(
-            actions.map((a) =>
-              this.afs
+      .valueChanges({ idField: 'key' })
+      .pipe<{ [key: string]: DocumentData }[], string[]>(
+        mergeMap((docs) => {
+          return forkJoin(
+            docs.reduce((dict, doc) => {
+              dict[doc.key] = this.afs
                 .collection('roles')
-                .doc(a.payload.doc.id)
+                .doc(doc.key)
                 .collection('role-users')
                 .doc(uid)
-                .get()
-            )
-          )
-        )
-      )
-      .subscribe((_) => console.log(_.map((d) => d.data())));
+                .get();
+              return dict;
+            }, {})
+          );
+        }),
+        map<{ [key: string]: DocumentData }[], string[]>((docs) => {
+          const roles = [];
+          Object.keys(docs).forEach((key) => {
+            const data = docs[key].data();
+            if (data !== undefined && data['active']) roles.push(key);
+          });
+          return roles;
+        })
+      );
+
+    // this.afs
+    //   .collectionGroup('role-users', (ref) => ref.where('active', '==', true))
+    //   .get()
+    //   .subscribe((qs) => qs.docs.forEach((doc) => console.log(doc.id)));
 
     // FIXME: Try a new way to get roles, not storing uid in documents
-    return this.afs
-      .collection('roles', (ref) => ref.where(uid, '==', true))
-      .snapshotChanges()
-      .pipe(
-        map<DocumentChangeAction<unknown>[], string[]>((actions) =>
-          actions.map((a) => a.payload.doc.id)
-        )
-      );
+    // this.afs
+    //   .collection('roles')
+    //   .doc('admin')
+    //   .collection('role-users')
+    //   .doc(uid)
+    //   .get()
+    //   .subscribe((_) => console.log(_.data()));
+
+    // return this.afs
+    //   .collection('roles', (ref) => ref.where(uid, '==', true))
+    //   .snapshotChanges()
+    //   .pipe(
+    //     map<DocumentChangeAction<unknown>[], string[]>((actions) =>
+    //       actions.map((a) => a.payload.doc.id)
+    //     )
+    //   );
   }
 
   isAdmin(uid: string): Observable<boolean> {
