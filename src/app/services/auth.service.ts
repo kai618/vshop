@@ -19,6 +19,7 @@ export class AuthService {
     private userSv: UserService
   ) {
     this.user$ = afAuth.authState;
+    this.user$.subscribe(user => userSv.user = user);
   }
 
   async login() {

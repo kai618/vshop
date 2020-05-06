@@ -9,6 +9,8 @@ import { Observable, of, forkJoin } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  user: firebase.User;
+
   constructor(private afs: AngularFirestore) {}
 
   async save(user: firebase.User) {
@@ -34,14 +36,14 @@ export class UserService {
     }
   }
 
-  private getRoleList(): Observable<string[]> {
-    return this.afs
-      .collection('roles')
-      .snapshotChanges()
-      .pipe(map((actions) => actions.map((a) => a.payload.doc.id)));
-  }
+  // private getRoleList(): Observable<string[]> {
+  //   return this.afs
+  //     .collection('roles')
+  //     .snapshotChanges()
+  //     .pipe(map((actions) => actions.map((a) => a.payload.doc.id)));
+  // }
 
-  getRoles(uid: string): Observable<String[]> {
+  getRoles(uid: string): Observable<string[]> {
     return this.afs
       .collection('roles')
       .valueChanges({ idField: 'key' })
@@ -65,6 +67,8 @@ export class UserService {
             const data = docs[key].data();
             if (data !== undefined && data['active']) roles.push(key);
           });
+
+          console.log(roles);
           return roles;
         })
       );
@@ -74,7 +78,7 @@ export class UserService {
     //   .get()
     //   .subscribe((qs) => qs.docs.forEach((doc) => console.log(doc.id)));
 
-    // FIXME: Try a new way to get roles, not storing uid in documents
+    //// Try a new way to get roles, not storing uid in documents
     // this.afs
     //   .collection('roles')
     //   .doc('admin')
@@ -97,6 +101,13 @@ export class UserService {
     if (uid === null) return of(null);
     return this.getRoles(uid).pipe(
       map<string[], boolean>((roles) => roles.includes('admin'))
+    );
+  }
+
+  isManager(uid: string): Observable<boolean> {
+    if (uid === null) return of(null);
+    return this.getRoles(uid).pipe(
+      map<string[], boolean>((roles) => roles.includes('manager'))
     );
   }
 }

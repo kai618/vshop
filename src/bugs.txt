@@ -1,0 +1,1 @@
+FIXME: in collapse mode, page will reload automatically after toggle user button

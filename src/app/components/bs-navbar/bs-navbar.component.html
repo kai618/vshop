@@ -46,7 +46,7 @@
       </ng-template>
 
       <li
-        *ngIf="auth.user$ | async as user; else loginLink"
+        *ngIf="authSv.user$ | async as user; else loginLink"
         ngbDropdown
         class="nav-item"
       >
@@ -61,7 +61,7 @@
         </div>
 
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-          <div class="mx-4">
+          <div class="mx-4 username-dropdown">
             <b>{{ user.displayName }}</b>
           </div>
           <div class="dropdown-email mx-4">{{ user.email }}</div>
@@ -78,6 +78,14 @@
               (click)="isMenuCollapsed = true"
               routerLink="/admin/products"
               >Manage Products</a
+            >
+          </ng-container>
+          <ng-container *ngIf="isManager">
+            <a
+              ngbDropdownItem
+              (click)="isMenuCollapsed = true"
+              routerLink="/admin/staff"
+              >Manage Staff</a
             >
           </ng-container>
 

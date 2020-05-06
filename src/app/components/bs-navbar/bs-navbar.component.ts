@@ -11,18 +11,22 @@ import { switchMap } from 'rxjs/operators';
 })
 export class BsNavbarComponent {
   public isMenuCollapsed = true;
+  private roleSub: Subscription;
   public isAdmin = false;
-  private adminSub: Subscription;
+  public isManager = false;
 
-  constructor(public auth: AuthService, private userSv: UserService) {
-    this.adminSub = auth.user$
-      .pipe(switchMap((user) => userSv.isAdmin(user.uid)))
-      .subscribe((val) => (this.isAdmin = val));
+  constructor(public authSv: AuthService, private userSv: UserService) {
+    this.roleSub = authSv.user$
+      .pipe(switchMap((user) => userSv.getRoles(user.uid)))
+      .subscribe((roles) => {
+        if (roles.includes('admin')) this.isAdmin = true;
+        if (roles.includes('manager')) this.isManager = true;
+      });
   }
 
   logout() {
     this.isMenuCollapsed = true;
-    this.adminSub?.unsubscribe();
-    this.auth.logout();
+    this.roleSub?.unsubscribe();
+    this.authSv.logout();
   }
 }
