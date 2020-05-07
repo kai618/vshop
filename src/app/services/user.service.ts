@@ -29,19 +29,11 @@ export class UserService {
           name: user.displayName,
           email: user.email,
           firstTime: Date.now(),
-          lastTime: Date.now(),
         });
     } catch (error) {
       console.error(error);
     }
   }
-
-  // private getRoleList(): Observable<string[]> {
-  //   return this.afs
-  //     .collection('roles')
-  //     .snapshotChanges()
-  //     .pipe(map((actions) => actions.map((a) => a.payload.doc.id)));
-  // }
 
   getRoles(uid: string): Observable<string[]> {
     return this.afs
@@ -73,19 +65,11 @@ export class UserService {
         })
       );
 
+    //// Try a new way to get roles, not storing uid in documents
     // this.afs
     //   .collectionGroup('role-users', (ref) => ref.where('active', '==', true))
     //   .get()
     //   .subscribe((qs) => qs.docs.forEach((doc) => console.log(doc.id)));
-
-    //// Try a new way to get roles, not storing uid in documents
-    // this.afs
-    //   .collection('roles')
-    //   .doc('admin')
-    //   .collection('role-users')
-    //   .doc(uid)
-    //   .get()
-    //   .subscribe((_) => console.log(_.data()));
 
     // return this.afs
     //   .collection('roles', (ref) => ref.where(uid, '==', true))

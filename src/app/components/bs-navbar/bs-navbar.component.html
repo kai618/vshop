@@ -34,7 +34,7 @@
 
     <!-- right side -->
     <ul class="navbar-nav ml-auto">
-      <ng-template #loginLink>
+      <ng-template #loginBtn>
         <li class="nav-item">
           <a
             class="nav-link"
@@ -46,13 +46,13 @@
       </ng-template>
 
       <li
-        *ngIf="authSv.user$ | async as user; else loginLink"
+        *ngIf="authSv.user$ | async as user; else loginBtn"
         ngbDropdown
         class="nav-item"
       >
-        <a ngbDropdownToggle class="d-md-none nav-link" href="#">
+        <div ngbDropdownToggle class="d-md-none nav-link">
           {{ user.displayName }}
-        </a>
+        </div>
         <div
           ngbDropdownToggle
           class="d-none d-md-block rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm"
@@ -84,7 +84,7 @@
             <a
               ngbDropdownItem
               (click)="isMenuCollapsed = true"
-              routerLink="/admin/staff"
+              routerLink="/manager/staff"
               >Manage Staff</a
             >
           </ng-container>

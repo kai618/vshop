@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -10,23 +10,23 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./bs-navbar.component.scss'],
 })
 export class BsNavbarComponent {
-  public isMenuCollapsed = true;
-  private roleSub: Subscription;
-  public isAdmin = false;
-  public isManager = false;
+  isMenuCollapsed = true;
+  isAdmin = false;
+  isManager = false;
 
-  constructor(public authSv: AuthService, private userSv: UserService) {
-    this.roleSub = authSv.user$
-      .pipe(switchMap((user) => userSv.getRoles(user.uid)))
-      .subscribe((roles) => {
-        if (roles.includes('admin')) this.isAdmin = true;
-        if (roles.includes('manager')) this.isManager = true;
-      });
+  constructor(public authSv: AuthService, public userSv: UserService) {
+    authSv.user$
+      .pipe(switchMap((user) => (user ? userSv.isAdmin(user.uid) : of(false))))
+      .subscribe((val) => (this.isAdmin = val));
+    authSv.user$
+      .pipe(
+        switchMap((user) => (user ? userSv.isManager(user.uid) : of(false)))
+      )
+      .subscribe((val) => (this.isManager = val));
   }
 
   logout() {
     this.isMenuCollapsed = true;
-    this.roleSub?.unsubscribe();
     this.authSv.logout();
   }
 }
