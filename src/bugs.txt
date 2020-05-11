@@ -1,0 +1,3 @@
+
+FIXME: in collapse mode, page will reload automatically after toggle user button
+FIXED: removed a.href="#" of name ngbDropdownToggle

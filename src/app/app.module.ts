@@ -21,6 +21,7 @@ import { AccountComponent } from './components/account/account.component';
 import { UserService } from './services/user.service';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 import { CategoryService } from './services/category.service';
+import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CategoryService } from './services/category.service';
     LoginComponent,
     AccountComponent,
     ProductFormComponent,
+    ManagerStaffComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ import { CategoryService } from './services/category.service';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthService, AuthGuard, UserService, CategoryService],
+  providers: [AuthService, UserService, CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
