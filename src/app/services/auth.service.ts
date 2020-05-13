@@ -30,8 +30,8 @@ export class AuthService {
         new firebase.auth.GoogleAuthProvider()
       );
 
-      await this.userSv.save(credential.user);
       this.router.navigateByUrl(returnUrl);
+      this.userSv.save(credential.user);
     } catch (error) {
       console.error(error);
     }
