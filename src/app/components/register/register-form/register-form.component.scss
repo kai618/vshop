@@ -1,0 +1,13 @@
+.card {
+  max-width: 700px;
+  margin: auto;
+}
+.card-img-top {
+  height: 90px;
+  object-fit: cover;
+}
+
+.card-img-overlay {
+  height: 90px;
+  color: white;
+}

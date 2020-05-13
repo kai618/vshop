@@ -22,7 +22,7 @@ export class AuthService {
     this.user$.subscribe((user) => (userSv.user = user));
   }
 
-  async login() {
+  async loginGoogleAccount() {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';
 
     try {

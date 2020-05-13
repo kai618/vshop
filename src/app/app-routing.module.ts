@@ -10,6 +10,7 @@ import { AccountComponent } from './components/account/account.component';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 import { ManagerGuard } from './guards/manager.guard';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
     canActivate: [LoginGuard],
   },
   {

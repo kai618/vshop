@@ -22,6 +22,12 @@ import { UserService } from './services/user.service';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 import { CategoryService } from './services/category.service';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
+import { RegisterComponent } from './components/register/register.component';
+import { GgLoginButtonComponent } from './components/login/gg-login-button/gg-login-button.component';
+import { FbLoginButtonComponent } from './components/login/fb-login-button/fb-login-button.component';
+import { OauthRowComponent } from './components/login/oauth-row/oauth-row.component';
+import { LoginFormComponent } from './components/login/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +39,12 @@ import { ManagerStaffComponent } from './components/manager/manager-staff/manage
     AccountComponent,
     ProductFormComponent,
     ManagerStaffComponent,
+    RegisterComponent,
+    GgLoginButtonComponent,
+    FbLoginButtonComponent,
+    OauthRowComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,
