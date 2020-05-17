@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private afs: AngularFirestore) {}
 
-  async save(user: firebase.User) {
+  async storeInFirestore(user: firebase.User) {
     const doc = this.afs.collection('users').doc(user.uid);
     try {
       const snapshot = await doc.get().toPromise();
