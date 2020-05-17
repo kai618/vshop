@@ -34,7 +34,7 @@
 
     <!-- right side -->
     <ul class="navbar-nav ml-auto">
-      <ng-template #loginBtn>
+      <ng-template #authBtns>
         <li class="nav-item">
           <a
             class="nav-link"
@@ -54,7 +54,7 @@
       </ng-template>
 
       <li
-        *ngIf="authSv.user$ | async as user; else loginBtn"
+        *ngIf="authSv.user$ | async as user; else authBtns"
         ngbDropdown
         class="nav-item"
       >

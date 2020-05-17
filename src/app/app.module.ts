@@ -16,7 +16,6 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard';
 import { AccountComponent } from './components/account/account.component';
 import { UserService } from './services/user.service';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';

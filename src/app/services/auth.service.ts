@@ -3,7 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -31,7 +31,11 @@ export class AuthService {
       );
 
       this.router.navigateByUrl(returnUrl);
+<<<<<<< HEAD
       await this.userSv.storeInFirestore(credential.user);
+=======
+      this.userSv.save(credential.user);
+>>>>>>> fc823128d21bea90a166cdc492fed6cf3a92ff19
     } catch (error) {
       console.error(error);
     }
@@ -40,6 +44,4 @@ export class AuthService {
   logout() {
     this.afAuth.auth.signOut();
   }
-
-  async isAdmin() {}
 }
