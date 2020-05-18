@@ -15,11 +15,8 @@ import { BsNavbarComponent } from './components/bs-navbar/bs-navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth.service';
 import { AccountComponent } from './components/account/account.component';
-import { UserService } from './services/user.service';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';
-import { CategoryService } from './services/category.service';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GgLoginButtonComponent } from './components/login/gg-login-button/gg-login-button.component';
@@ -53,7 +50,7 @@ import { RegisterFormComponent } from './components/register/register-form/regis
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthService, UserService, CategoryService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

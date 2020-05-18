@@ -31,11 +31,7 @@ export class AuthService {
       );
 
       this.router.navigateByUrl(returnUrl);
-<<<<<<< HEAD
-      await this.userSv.storeInFirestore(credential.user);
-=======
-      this.userSv.save(credential.user);
->>>>>>> fc823128d21bea90a166cdc492fed6cf3a92ff19
+      this.userSv.storeInFirestore(credential.user);
     } catch (error) {
       console.error(error);
     }
