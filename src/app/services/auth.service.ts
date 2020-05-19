@@ -37,6 +37,27 @@ export class AuthService {
     }
   }
 
+  async loginEmailPassword(email: string, pass: string) {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';
+
+    try {
+      const credential = await this.afAuth.auth.signInWithEmailAndPassword(
+        email,
+        pass
+      );
+      this.router.navigateByUrl(returnUrl);
+      this.userSv.storeInFirestore(credential.user);
+    } catch (error) {
+      console.error(error);
+      switch (error.code) {
+        case 'auth/user-not-found':
+          throw new Error('The email or password was wrong!');
+        default:
+          throw new Error('Unable to login!');
+      }
+    }
+  }
+
   logout() {
     this.afAuth.auth.signOut();
   }

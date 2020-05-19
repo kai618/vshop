@@ -24,6 +24,7 @@ import { FbLoginButtonComponent } from './components/login/fb-login-button/fb-lo
 import { OauthRowComponent } from './components/login/oauth-row/oauth-row.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RegisterFormComponent } from './components/register/register-form/regis
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
