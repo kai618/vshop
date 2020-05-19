@@ -32,6 +32,7 @@ nav.navbar {
   height: 40px;
   width: 40px;
 }
+
 .nav-avatar-wrapper img {
   max-width: 100%;
 }
@@ -48,4 +49,9 @@ nav.navbar {
 
 .dropdown-item {
   font-size: 17px;
+}
+
+.first-letter {
+  color: white;
+  font-weight: bold;
 }

@@ -63,9 +63,16 @@
         </div>
         <div
           ngbDropdownToggle
-          class="d-none d-md-block rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm"
+          class="d-none d-md-flex rounded-circle nav-avatar-wrapper nav-link p-0 shadow-sm bg-success justify-content-center align-items-center"
         >
-          <img class="rounded-circle" [src]="user.photoURL" />
+          <img
+            *ngIf="user.photoURL; else firstLetter"
+            class="rounded-circle"
+            [src]="user.photoURL"
+          />
+          <ng-template #firstLetter>
+            <span class="first-letter">{{ user.displayName[0] }}</span>
+          </ng-template>
         </div>
 
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">

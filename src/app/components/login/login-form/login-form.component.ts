@@ -14,7 +14,6 @@ export class LoginFormComponent {
   constructor(private authSv: AuthService) {}
 
   async onSubmit() {
-    console.log(this.form);
     if (!this.form.valid) return;
     try {
       await this.authSv.loginEmailPassword(
@@ -23,7 +22,6 @@ export class LoginFormComponent {
       );
     } catch (error) {
       this.error = error.message;
-    } finally {
       this.form.reset();
     }
   }

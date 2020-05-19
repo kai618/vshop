@@ -3,14 +3,16 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user$: Observable<firebase.User>;
+  user$: Observable<User>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -18,7 +20,9 @@ export class AuthService {
     private router: Router,
     private userSv: UserService
   ) {
-    this.user$ = afAuth.authState;
+    this.user$ = afAuth.authState.pipe(
+      map<firebase.User, User>((user) => this.userSv.toUser(user))
+    );
     this.user$.subscribe((user) => (userSv.user = user));
   }
 
@@ -50,6 +54,7 @@ export class AuthService {
     } catch (error) {
       console.error(error);
       switch (error.code) {
+        case 'auth/wrong-password':
         case 'auth/user-not-found':
           throw new Error('The email or password was wrong!');
         default:

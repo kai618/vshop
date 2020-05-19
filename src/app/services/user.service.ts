@@ -4,14 +4,26 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { map, mergeMap } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  user: firebase.User;
+  user: User;
 
   constructor(private afs: AngularFirestore) {}
+
+  toUser(fbUser: firebase.User): User {
+    if (fbUser == null) return null;
+    return <User>{
+      uid: fbUser.uid,
+      email: fbUser.email,
+      displayName:
+        fbUser.displayName ?? this.capitalise(fbUser.email.split('@')[0]),
+      photoURL: fbUser.photoURL,
+    };
+  }
 
   async storeInFirestore(user: firebase.User) {
     const doc = this.afs.collection('users').doc(user.uid);
@@ -60,7 +72,7 @@ export class UserService {
             if (data !== undefined && data['active']) roles.push(key);
           });
 
-          console.log(roles);
+          // console.log(roles);
           return roles;
         })
       );
@@ -93,5 +105,10 @@ export class UserService {
     return this.getRoles(uid).pipe(
       map<string[], boolean>((roles) => roles.includes('manager'))
     );
+  }
+
+  capitalise(string: string): string {
+    const first = string[0].toUpperCase();
+    return first + string.slice(1);
   }
 }
