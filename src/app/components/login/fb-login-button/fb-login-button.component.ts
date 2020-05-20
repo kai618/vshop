@@ -6,9 +6,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./fb-login-button.component.scss'],
 })
 export class FbLoginButtonComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private authSv: AuthService) {}
 
   login() {
-
+    this.authSv.loginFacebookAccount();
   }
 }

@@ -7,9 +7,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./gg-login-button.component.scss'],
 })
 export class GgLoginButtonComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private authSv: AuthService) {}
 
   login() {
-    this.auth.loginGoogleAccount();
+    this.authSv.loginGoogleAccount();
   }
 }

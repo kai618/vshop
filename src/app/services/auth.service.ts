@@ -40,6 +40,20 @@ export class AuthService {
       console.error(error);
     }
   }
+  async loginFacebookAccount() {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';
+
+    try {
+      const credential = await this.afAuth.auth.signInWithPopup(
+        new firebase.auth.FacebookAuthProvider()
+      );
+      this.router.navigateByUrl(returnUrl);
+      this.userSv.storeInFirestore(credential.user);
+    } catch (error) {
+      // https://firebase.google.com/docs/auth/web/google-signin#expandable-1-label
+      console.error(error);
+    }
+  }
 
   async loginEmailPassword(email: string, pass: string) {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/';
@@ -84,7 +98,11 @@ export class AuthService {
     }
   }
 
-  logout() {
-    this.afAuth.auth.signOut();
+  async logout() {
+    try {
+      await this.afAuth.auth.signOut();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -36,12 +36,15 @@ export class UserService {
           email: user.email,
           lastTime: Date.now(),
         });
-      else
+      else {
+        const firstTime = Date.now();
         doc.set({
           name: user.displayName,
           email: user.email,
-          firstTime: Date.now(),
+          firstTime: firstTime,
+          lastTime: firstTime,
         });
+      }
     } catch (error) {
       console.error(error);
     }
