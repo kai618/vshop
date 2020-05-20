@@ -63,6 +63,27 @@ export class AuthService {
     }
   }
 
+  async signUpEmailPassword(email: string, pass: string) {
+    try {
+      const credential = await this.afAuth.auth.createUserWithEmailAndPassword(
+        email,
+        pass
+      );
+      this.router.navigate(['/']);
+      this.userSv.storeInFirestore(credential.user);
+    } catch (error) {
+      console.error(error);
+      switch (error.code) {
+        case 'auth/invalid-email':
+          throw new Error(error.message);
+        case 'auth/email-already-in-use':
+          throw new Error('This email address is already in use!');
+        default:
+          throw new Error('Unable to sign up!');
+      }
+    }
+  }
+
   logout() {
     this.afAuth.auth.signOut();
   }

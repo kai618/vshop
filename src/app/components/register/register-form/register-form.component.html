@@ -7,21 +7,87 @@
   <h4 class="card-img-overlay text-center font-weight-bold text-capitalize">
     register account
   </h4>
-  <form class="m-4">
+  <div *ngIf="requestError" class="alert alert-danger mb-0 mt-2 mx-2">
+    {{ requestError }}
+  </div>
+  <form #form="ngForm" class="m-4" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" />
+      <input
+        ngModel
+        #email="ngModel"
+        type="email"
+        name="email"
+        class="form-control"
+        [ngClass]="{
+          'is-valid': email.touched && email.valid,
+          'is-invalid': email.touched && email.invalid
+        }"
+        id="email"
+        required
+        email
+      />
+      <div *ngIf="email.errors?.required" class="invalid-feedback">
+        Please provide an email
+      </div>
+      <div *ngIf="email.errors?.email" class="invalid-feedback">
+        Invaid email address
+      </div>
     </div>
+
     <div class="form-group">
       <label for="pass">Password</label>
-      <input type="password" class="form-control" id="pass" />
+      <input
+        ngModel
+        #pass="ngModel"
+        name="password"
+        type="password"
+        class="form-control"
+        [ngClass]="{
+          'is-valid': pass.touched && pass.valid,
+          'is-invalid': pass.touched && pass.invalid
+        }"
+        id="pass"
+        required
+        minlength="6"
+        (input)="onChange(pass.value, confirm.value)"
+      />
+      <div *ngIf="pass.errors?.required" class="invalid-feedback">
+        Please provide a password
+      </div>
+      <div *ngIf="pass.errors?.minlength" class="invalid-feedback">
+        Password must have at least 6 characters
+      </div>
     </div>
+
     <div class="form-group">
-      <label for="confirm">Re-enter Password</label>
-      <input type="password" class="form-control" id="confirm" />
+      <label for="confirm">Confirm Password</label>
+      <input
+        ngModel
+        #confirm="ngModel"
+        name="confirm"
+        type="password"
+        class="form-control"
+        [ngClass]="{
+          'is-valid': confirm.dirty && !confirmError,
+          'is-invalid': confirm.dirty && confirmError
+        }"
+        id="confirm"
+        required
+        minlength="6"
+        (input)="onChange(pass.value, confirm.value)"
+      />
+      <div *ngIf="confirmError" class="invalid-feedback">
+        {{ confirmError }}
+      </div>
     </div>
+
     <div class="d-flex justify-content-center">
-      <button type="submit" class="btn btn-outline-success mt-2">
+      <button
+        type="submit"
+        class="btn btn-outline-success mt-2"
+        [disabled]="!form.valid || confirmError"
+      >
         Register
       </button>
     </div>
