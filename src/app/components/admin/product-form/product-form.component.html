@@ -1,91 +1,112 @@
-<form #form="ngForm" (ngSubmit)="submit()">
-  <!-- Title Start -->
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input ngModel name="title" id="title" type="text" class="form-control" />
-  </div>
-  <!-- Title End -->
-
-  <!-- Category Start -->
-  <div class="form-group">
-    <label for="category">Category</label>
-    <ng-container *ngIf="categories$ | async as cats; else loadOption">
-      <select
-        [ngModel]="cats[0].id"
-        name="category"
-        id="category"
-        class="form-control"
-      >
-        <option *ngFor="let cat of cats" [value]="cat.id">{{
-          cat.name
-        }}</option>
-      </select>
-    </ng-container>
-    <ng-template #loadOption>
-      <select disabled id="category" class="form-control">
-        <option>Loading...</option>
-      </select>
-    </ng-template>
-  </div>
-  <!-- Category End -->
-
-  <div class="row">
-    <div class="col-12 col-sm-7">
-      <!-- Price Start -->
+<div class="row">
+  <div class="col-12 col-md-7">
+    <form #form="ngForm" (ngSubmit)="submit()">
+      <!-- Title Start -->
       <div class="form-group">
-        <label for="price">Price</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-          </div>
-          <input
-            ngModel
-            name="price"
-            id="price"
-            type="number"
-            min="0"
-            step="0.01"
+        <label for="title">Title</label>
+        <input
+          #title
+          ngModel
+          name="title"
+          id="title"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <!-- Title End -->
+
+      <!-- Category Start -->
+      <div class="form-group">
+        <label for="category">Category</label>
+        <ng-container *ngIf="categories$ | async as cats; else loadOption">
+          <select
+            [ngModel]="cats[0].id"
+            name="category"
+            id="category"
             class="form-control"
-          />
+          >
+            <option *ngFor="let cat of cats" [value]="cat.id">{{
+              cat.name
+            }}</option>
+          </select>
+        </ng-container>
+        <ng-template #loadOption>
+          <select disabled id="category" class="form-control">
+            <option>Loading...</option>
+          </select>
+        </ng-template>
+      </div>
+      <!-- Category End -->
+
+      <div class="row">
+        <div class="col-12 col-sm-7">
+          <!-- Price Start -->
+          <div class="form-group">
+            <label for="price">Price</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input
+                #price
+                ngModel
+                name="price"
+                id="price"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- Price End -->
+        </div>
+        <div class="col-12 col-sm-5">
+          <!-- Amount Start -->
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <div class="input-group">
+              <input
+                ngModel
+                name="amount"
+                id="amount"
+                type="number"
+                min="0"
+                step="1"
+                class="form-control"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">kg</span>
+              </div>
+            </div>
+          </div>
+          <!-- Amount End -->
         </div>
       </div>
-      <!-- Price End -->
-    </div>
-    <div class="col-12 col-sm-5">
-      <!-- Amount Start -->
+
+      <!-- Image URL Start -->
       <div class="form-group">
-        <label for="amount">Amount</label>
-        <div class="input-group">
-          <input
-            ngModel
-            name="amount"
-            id="amount"
-            type="number"
-            min="0"
-            step="1"
-            class="form-control"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text">kg</span>
-          </div>
-        </div>
+        <label for="photoURL">Image Url</label>
+        <input
+          ngModel
+          name="photoURL"
+          id="photoURL"
+          type="text"
+          class="form-control"
+          #photoURL
+        />
       </div>
-      <!-- Amount End -->
+      <!-- Image URL End -->
+    </form>
+  </div>
+  <div class="col-12 col-md-5 my-4">
+    <div class="card shadow-sm">
+      <img class="card-img-top" [src]="photoURL.value" alt="" />
+      <div class="card-body d-flex flex-column align-items-center">
+        <h4 class="card-title font-weight-bold">{{ title.value }}</h4>
+        <p class="card-text">{{ price.value | currency: "USD":true }}</p>
+      </div>
     </div>
   </div>
-
-  <!-- Image URL Start -->
-  <div class="form-group">
-    <label for="photoURL">Image Url</label>
-    <input
-      ngModel
-      name="photoURL"
-      id="photoURL"
-      type="text"
-      class="form-control"
-    />
-  </div>
-  <!-- Image URL End -->
-
-  <button class="btn btn-success">Create</button>
-</form>
+</div>
+<button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
