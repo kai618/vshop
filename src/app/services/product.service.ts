@@ -29,7 +29,7 @@ export class ProductService {
   getAll(): Observable<any> {
     try {
       const products$ = this.afs
-        .collection('products')
+        .collection('products', (ref) => ref.orderBy('createDate', 'desc'))
         .valueChanges({ idField: 'id' });
       return products$;
     } catch (error) {

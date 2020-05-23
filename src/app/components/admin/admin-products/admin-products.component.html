@@ -1,12 +1,13 @@
 <a routerLink="/admin/products/new" class="btn btn-success mb-4">New Product</a>
 
-<div *ngIf="products$ | async as products">
+<div *ngIf="products">
   <table class="table">
     <thead>
       <tr>
         <th>Title</th>
         <th>Price</th>
         <th>Amount</th>
+        <th>Time</th>
         <th>Settings</th>
       </tr>
     </thead>
@@ -15,6 +16,7 @@
         <td>{{ p.title }}</td>
         <td>{{ p.price | currency: "USD" }}</td>
         <td>{{ p.amount }}</td>
+        <td>{{ p.createDate | date: "dd/MM/yyyy - HH:mm" }}</td>
         <td>
           <button class="btn btn-sm btn-light" (click)="toEditPage(p.id)">
             Edit

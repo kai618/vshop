@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { take, first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
@@ -10,8 +10,9 @@ import { LoadingBarService } from 'src/app/services/loading-bar.service';
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.scss'],
 })
-export class AdminProductsComponent implements OnInit {
-  products$: Observable<any>;
+export class AdminProductsComponent implements OnInit, OnDestroy {
+  products: any[];
+  private subscription: Subscription;
 
   constructor(
     private productSv: ProductService,
@@ -21,8 +22,19 @@ export class AdminProductsComponent implements OnInit {
 
   ngOnInit() {
     this.loadingSv.on();
-    this.products$ = this.productSv.getAll();
-    this.products$.pipe(take(1)).subscribe(() => this.loadingSv.off());
+    this.subscription = this.productSv
+      .getAll()
+      .subscribe((data) => (this.products = data));
+
+    // FIXME: find another way to hook a callback on the first emission
+    this.productSv
+      .getAll()
+      .pipe(take(1))
+      .subscribe(() => this.loadingSv.off());
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   toEditPage(id: string) {
