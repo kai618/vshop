@@ -1,1 +1,20 @@
 <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+
+<div *ngIf="products$ | async as products">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Settings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{ p.title }}</td>
+        <td>{{ p.price | currency: "USD" }}</td>
+        <td><a [routerLink]="['/admin/products/', p.id]">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

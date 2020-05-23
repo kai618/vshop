@@ -5,8 +5,7 @@
       <div class="form-group">
         <label for="title">Title</label>
         <input
-          #title
-          ngModel
+          [(ngModel)]="product.title"
           name="title"
           id="title"
           type="text"
@@ -18,9 +17,9 @@
       <!-- Category Start -->
       <div class="form-group">
         <label for="category">Category</label>
-        <ng-container *ngIf="categories$ | async as cats; else loadOption">
+        <ng-container *ngIf="categories$ | async as cats; else loadingText">
           <select
-            [ngModel]="cats[0].id"
+            [(ngModel)]="product.category"
             name="category"
             id="category"
             class="form-control"
@@ -30,7 +29,7 @@
             }}</option>
           </select>
         </ng-container>
-        <ng-template #loadOption>
+        <ng-template #loadingText>
           <select disabled id="category" class="form-control">
             <option>Loading...</option>
           </select>
@@ -48,8 +47,7 @@
                 <span class="input-group-text">$</span>
               </div>
               <input
-                #price
-                ngModel
+                [(ngModel)]="product.price"
                 name="price"
                 id="price"
                 type="number"
@@ -67,7 +65,7 @@
             <label for="amount">Amount</label>
             <div class="input-group">
               <input
-                ngModel
+                [(ngModel)]="product.amount"
                 name="amount"
                 id="amount"
                 type="number"
@@ -88,7 +86,7 @@
       <div class="form-group">
         <label for="photoURL">Image URL</label>
         <input
-          ngModel
+          [(ngModel)]="product.photoURL"
           name="photoURL"
           id="photoURL"
           type="text"
@@ -103,7 +101,7 @@
 
   <div class="col-12 col-md-5">
     <!-- Showcase Start -->
-    <div class="card showcase">
+    <div *ngIf="product.photoURL" class="card showcase">
       <img
         #cardPhoto
         class="card-img-top card-photo"
@@ -113,10 +111,10 @@
       />
       <div class="card-body d-flex flex-column align-items-center">
         <h5 class="card-title font-weight-bold">
-          {{ title.value ? title.value : "No title" }}
+          {{ product.title ? product.title : "No title" }}
         </h5>
         <p class="card-text">
-          {{ price.value ? (price.value | currency: "USD") : "No price" }}
+          {{ product.price ? (product.price | currency: "USD") : "No price" }}
         </p>
       </div>
     </div>
@@ -124,5 +122,5 @@
   </div>
 </div>
 <div>
-  <button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
+  <button class="btn btn-success" (click)="form.ngSubmit.emit()">Save</button>
 </div>

@@ -16,7 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccountComponent } from './components/account/account.component';
-import { ProductFormComponent } from './components/admin/product-form/product-form.component';
+import { NewProductFormComponent } from './components/admin/new-product-form/new-product-form.component';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
 import { RegisterComponent } from './components/register/register.component';
 import { GgLoginButtonComponent } from './components/login/gg-login-button/gg-login-button.component';
@@ -25,6 +25,7 @@ import { OauthRowComponent } from './components/login/oauth-row/oauth-row.compon
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
 import { FormsModule } from '@angular/forms';
+import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { FormsModule } from '@angular/forms';
     AdminProductsComponent,
     LoginComponent,
     AccountComponent,
-    ProductFormComponent,
+    NewProductFormComponent,
     ManagerStaffComponent,
     RegisterComponent,
     GgLoginButtonComponent,
@@ -42,6 +43,8 @@ import { FormsModule } from '@angular/forms';
     OauthRowComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    NewProductFormComponent,
+    UpdateProductFormComponent,
   ],
   imports: [
     BrowserModule,
