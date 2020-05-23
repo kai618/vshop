@@ -11,6 +11,8 @@ export class LoadingBarComponent implements OnInit {
   hidePercentStr: string;
   display: string = 'none';
   private interval: any;
+  private bar = 0;
+  private hide = 0;
 
   constructor(private loadingSv: LoadingBarService) {}
 
@@ -30,20 +32,19 @@ export class LoadingBarComponent implements OnInit {
 
   start() {
     const length = 20;
-    let bar = 0;
-    let hide = 0;
 
     this.interval = setInterval(() => {
-      bar += 0.7;
-      if (bar < 100) hide = bar - length < 0 ? 0 : bar - length;
-      else if (bar >= 100 && hide < 100) hide += 1;
+      this.bar += 0.7;
+      if (this.bar < 100)
+        this.hide = this.bar - length < 0 ? 0 : this.bar - length;
+      else if (this.bar >= 100 && this.hide < 100) this.hide += 1;
       else {
-        bar = 0;
-        hide = 0;
+        this.bar = 0;
+        this.hide = 0;
       }
-      this.barPercentStr = `${bar}%`;
-      this.hidePercentStr = `${hide}%`;
-    }, 5);
+      this.barPercentStr = `${this.bar}%`;
+      this.hidePercentStr = `${this.hide}%`;
+    }, 4);
   }
 
   stop() {

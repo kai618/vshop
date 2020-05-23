@@ -4,4 +4,5 @@ export interface Product {
   price?: number;
   amount?: number;
   photoURL?: string;
+  createDate?: number;
 }

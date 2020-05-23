@@ -28,13 +28,17 @@ export class UpdateProductFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadingSv.on();
     this.categories$ = this.catSv.getCategories();
 
     this.id = this.route.snapshot.paramMap.get('id');
     this.productSv
       .get(this.id)
       .pipe(take(1))
-      .subscribe((p) => (this.product = p));
+      .subscribe((p) => {
+        this.product = p;
+        this.loadingSv.off();
+      });
   }
 
   onCardPhotoError(element: HTMLImageElement) {

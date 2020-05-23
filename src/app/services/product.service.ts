@@ -52,6 +52,7 @@ export class ProductService {
                 amount: p['amount'],
                 category: p['category'],
                 photoURL: p['photoURL'],
+                createDate: p['createDate'],
               }
           )
         );

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-new-product-form',
@@ -32,7 +33,15 @@ export class NewProductFormComponent implements OnInit {
 
   async submit() {
     this.loadingSv.on();
-    await this.productSv.create(this.form.value);
+    const val = this.form.value;
+    await this.productSv.create(<Product>{
+      title: val.title,
+      category: val.category,
+      photoURL: val.photoURL,
+      price: val.price,
+      amount: val.amount,
+      createDate: Date.now(),
+    });
     this.loadingSv.off();
     this.router.navigate(['/admin/products']);
   }

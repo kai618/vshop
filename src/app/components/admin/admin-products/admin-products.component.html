@@ -1,4 +1,4 @@
-<a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+<a routerLink="/admin/products/new" class="btn btn-success mb-4">New Product</a>
 
 <div *ngIf="products$ | async as products">
   <table class="table">
@@ -6,6 +6,7 @@
       <tr>
         <th>Title</th>
         <th>Price</th>
+        <th>Amount</th>
         <th>Settings</th>
       </tr>
     </thead>
@@ -13,6 +14,7 @@
       <tr *ngFor="let p of products">
         <td>{{ p.title }}</td>
         <td>{{ p.price | currency: "USD" }}</td>
+        <td>{{ p.amount }}</td>
         <td>
           <button class="btn btn-sm btn-light" (click)="toEditPage(p.id)">
             Edit
