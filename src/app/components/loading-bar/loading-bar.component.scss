@@ -1,0 +1,26 @@
+$hide-color: rgb(222, 241, 222);
+
+.loading {
+  z-index: 1;
+  height: 4px;
+  background-color: $hide-color;
+  position: fixed;
+  top: 59px;
+  left: 0;
+  right: 0;
+}
+
+.loading-bar {
+  z-index: 2;
+  height: 100%;
+  background-color: green;
+}
+.loading-hide {
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  height: 100%;
+  background-color: $hide-color;
+}

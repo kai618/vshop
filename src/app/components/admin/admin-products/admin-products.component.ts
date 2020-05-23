@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
 })
 export class AdminProductsComponent implements OnInit {
   products$: Observable<any>;
-  constructor(private productSv: ProductService, private router: Router) {}
+  constructor(
+    private productSv: ProductService,
+    private router: Router,
+    private loadingSv: LoadingBarService
+  ) {}
 
   ngOnInit() {
     this.products$ = this.productSv.getAll();

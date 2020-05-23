@@ -26,6 +26,7 @@ import { LoginFormComponent } from './components/login/login-form/login-form.com
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
+import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { UpdateProductFormComponent } from './components/admin/update-product-fo
     RegisterFormComponent,
     NewProductFormComponent,
     UpdateProductFormComponent,
+    LoadingBarComponent,
   ],
   imports: [
     BrowserModule,

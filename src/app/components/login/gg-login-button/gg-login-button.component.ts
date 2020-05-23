@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-gg-login-button',
@@ -7,9 +8,14 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./gg-login-button.component.scss'],
 })
 export class GgLoginButtonComponent {
-  constructor(private authSv: AuthService) {}
+  constructor(
+    private authSv: AuthService,
+    private loadingSv: LoadingBarService
+  ) {}
 
-  login() {
-    this.authSv.loginGoogleAccount();
+  async login() {
+    this.loadingSv.on();
+    await this.authSv.loginGoogleAccount();
+    this.loadingSv.off();
   }
 }
