@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterFormComponent {
   @ViewChild('form') form: NgForm;
-  confirmError: string;
+  confirmError: string = 'Please provide a confirm password';
   requestError: string;
 
   constructor(private authSv: AuthService) {}
