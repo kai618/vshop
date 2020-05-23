@@ -3,6 +3,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { NgForm } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-new-product-form',
@@ -17,7 +18,8 @@ export class NewProductFormComponent implements OnInit {
   constructor(
     private router: Router,
     private catSv: CategoryService,
-    private productSv: ProductService
+    private productSv: ProductService,
+    private loadingSv: LoadingBarService
   ) {}
   ngOnInit() {
     this.categories$ = this.catSv.getCategories();
@@ -29,7 +31,9 @@ export class NewProductFormComponent implements OnInit {
   }
 
   async submit() {
+    this.loadingSv.on();
     await this.productSv.create(this.form.value);
+    this.loadingSv.off();
     this.router.navigate(['/admin/products']);
   }
 }

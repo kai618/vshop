@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { Product } from 'src/app/interfaces/product';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-update-product-form',
@@ -22,7 +23,8 @@ export class UpdateProductFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private catSv: CategoryService,
-    private productSv: ProductService
+    private productSv: ProductService,
+    private loadingSv: LoadingBarService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,9 @@ export class UpdateProductFormComponent implements OnInit {
   }
 
   async submit() {
+    this.loadingSv.on();
     await this.productSv.update(this.id, this.product);
+    this.loadingSv.off();
     this.router.navigate(['/admin/products']);
   }
 
