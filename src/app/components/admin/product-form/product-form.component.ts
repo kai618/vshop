@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class ProductFormComponent {
   @ViewChild('form') form: NgForm;
   categories$: any;
+  isPhotoUrlValid: boolean = true;
 
   constructor(
     private router: Router,
@@ -19,6 +20,11 @@ export class ProductFormComponent {
     private productSv: ProductService
   ) {
     this.categories$ = catSv.getCategories();
+  }
+
+  onCardPhotoError(element: HTMLImageElement) {
+    this.isPhotoUrlValid = false;
+    element.src = '../../../../assets/no-photo.png';
   }
 
   async submit() {

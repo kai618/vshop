@@ -94,19 +94,33 @@
           type="text"
           class="form-control"
           #photoURL
+          (input)="this.isPhotoUrlValid = true"
         />
       </div>
       <!-- Image URL End -->
     </form>
   </div>
-  <div class="col-12 col-md-5 my-4">
-    <div class="card shadow-sm">
-      <img class="card-img-top" [src]="photoURL.value" alt="" />
+
+  <div class="col-12 col-md-5">
+    <!-- Showcase Start -->
+    <div class="card shadow-sm showcase">
+      <img
+        #cardPhoto
+        class="card-img-top card-photo"
+        [src]="photoURL.value"
+        (error)="onCardPhotoError(cardPhoto)"
+        alt="Image error"
+      />
       <div class="card-body d-flex flex-column align-items-center">
-        <h4 class="card-title font-weight-bold">{{ title.value }}</h4>
-        <p class="card-text">{{ price.value | currency: "USD":true }}</p>
+        <h4 class="card-title font-weight-bold">
+          {{ title.value ? title.value : "No title" }}
+        </h4>
+        <p class="card-text">
+          {{ price.value ? (price.value | currency: "USD") : "No price" }}
+        </p>
       </div>
     </div>
+    <!-- Showcase End -->
   </div>
 </div>
 <button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
