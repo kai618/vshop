@@ -18,6 +18,14 @@ export class ProductService {
     }
   }
 
+  async update(id: string, product: Product) {
+    try {
+      await this.afs.collection('products').doc(id).update(product);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   getAll(): Observable<any> {
     try {
       const products$ = this.afs

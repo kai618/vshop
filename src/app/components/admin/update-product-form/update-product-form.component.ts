@@ -16,6 +16,7 @@ export class UpdateProductFormComponent implements OnInit {
   categories$: any;
   isPhotoUrlValid: boolean = true;
   product: Product = {};
+  private id: string;
 
   constructor(
     private router: Router,
@@ -27,19 +28,22 @@ export class UpdateProductFormComponent implements OnInit {
   ngOnInit() {
     this.categories$ = this.catSv.getCategories();
 
-    const id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
     this.productSv
-      .get(id)
+      .get(this.id)
       .pipe(take(1))
       .subscribe((p) => (this.product = p));
   }
 
   onCardPhotoError(element: HTMLImageElement) {
-    this.isPhotoUrlValid = false;
     element.src = '../../../../assets/no-photo.png';
+    this.isPhotoUrlValid = false;
   }
 
-  submit() {
-    console.log(this.product);
+  async submit() {
+    await this.productSv.update(this.id, this.product);
+    this.router.navigate(['/admin/products']);
   }
+
+  delete() {}
 }
