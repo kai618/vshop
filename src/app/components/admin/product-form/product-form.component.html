@@ -86,7 +86,7 @@
 
       <!-- Image URL Start -->
       <div class="form-group">
-        <label for="photoURL">Image Url</label>
+        <label for="photoURL">Image URL</label>
         <input
           ngModel
           name="photoURL"
@@ -103,7 +103,7 @@
 
   <div class="col-12 col-md-5">
     <!-- Showcase Start -->
-    <div class="card shadow-sm showcase">
+    <div class="card showcase">
       <img
         #cardPhoto
         class="card-img-top card-photo"
@@ -112,9 +112,9 @@
         alt="Image error"
       />
       <div class="card-body d-flex flex-column align-items-center">
-        <h4 class="card-title font-weight-bold">
+        <h5 class="card-title font-weight-bold">
           {{ title.value ? title.value : "No title" }}
-        </h4>
+        </h5>
         <p class="card-text">
           {{ price.value ? (price.value | currency: "USD") : "No price" }}
         </p>
@@ -123,4 +123,6 @@
     <!-- Showcase End -->
   </div>
 </div>
-<button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
+<div>
+  <button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
+</div>
