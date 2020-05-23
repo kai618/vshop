@@ -13,7 +13,11 @@
       <tr *ngFor="let p of products">
         <td>{{ p.title }}</td>
         <td>{{ p.price | currency: "USD" }}</td>
-        <td><a [routerLink]="['/admin/products/', p.id]">Edit</a></td>
+        <td>
+          <button class="btn btn-sm btn-light" (click)="toEditPage(p.id)">
+            Edit
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

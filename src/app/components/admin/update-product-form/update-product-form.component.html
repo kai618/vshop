@@ -100,7 +100,7 @@
 
   <div class="col-12 col-md-5">
     <!-- Showcase Start -->
-    <div class="card showcase">
+    <div *ngIf="product.photoURL; else noDataCard" class="card showcase">
       <img
         #cardPhoto
         class="card-img-top card-photo"
@@ -117,6 +117,16 @@
         </p>
       </div>
     </div>
+    <ng-template #noDataCard>
+      <div class="card showcase">
+        <img class="card-img-top card-photo" src="" alt="" />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">&nbsp;</h5>
+          <p class="card-text">&nbsp;</p>
+        </div>
+      </div>
+    </ng-template>
+
     <!-- Showcase End -->
   </div>
 </div>
