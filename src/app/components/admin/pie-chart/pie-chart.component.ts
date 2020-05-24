@@ -38,15 +38,23 @@ export class PieChartComponent implements OnInit, OnDestroy {
       this.chartLabels = [];
       this.chartData = [];
       this.chartColors[0].backgroundColor = [];
+      let sum = 0;
+
       cats.forEach((cat) => {
         this.chartLabels.push(cat['name']);
 
         const total = cat['total'];
         this.chartData.push(total);
+        sum += total;
 
         if (total == 0) this.chartColors[0].backgroundColor.push('white');
         else this.chartColors[0].backgroundColor.push(cat['labelColor']);
       });
+
+      // // sum
+      // this.chartData.push(0);
+      // this.chartColors[0].backgroundColor.push('white');
+      // this.chartLabels.push(`All (${sum})`);
     });
 
     this.chartLegend = window.window.innerWidth >= this.width;

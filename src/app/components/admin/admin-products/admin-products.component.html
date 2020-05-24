@@ -36,7 +36,13 @@
         <td>{{ i + 1 }}</td>
         <td>{{ p.title }}</td>
         <td>{{ p.price | currency: "USD" }}</td>
-        <td>{{ p.amount }}</td>
+        <td
+          [ngClass]="{
+            'font-weight-bold': p.amount == 0
+          }"
+        >
+          {{ p.amount }}
+        </td>
         <td
           data-toggle="tooltip"
           [title]="p.createDate | date: 'HH:mm - dd/MM/yyyy'"

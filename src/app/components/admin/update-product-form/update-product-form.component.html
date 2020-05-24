@@ -100,7 +100,10 @@
 
   <div class="col-12 col-md-5">
     <!-- Showcase Start -->
-    <div *ngIf="product.photoURL != null; else noDataCard" class="card showcase">
+    <div
+      *ngIf="product.photoURL != null; else noDataCard"
+      class="card showcase"
+    >
       <img
         #cardPhoto
         class="card-img-top card-photo"
@@ -132,5 +135,42 @@
 </div>
 <div class="d-flex justify-content-between">
   <button class="btn btn-success" (click)="form.ngSubmit.emit()">Update</button>
-  <button class="btn btn-danger" (click)="delete()">Remove</button>
+  <button class="btn btn-danger" (click)="openModal(removeModal)">
+    Remove
+  </button>
 </div>
+
+<!-- Modal start -->
+<ng-template #removeModal let-modal>
+  <div class="modal-header bg-danger d-flex justify-content-center">
+    <h4 class="modal-title" style="color: white; font-weight: bold;">
+      Product Removal
+    </h4>
+    <!-- <button type="btn btn-sm btn-outline-success" class="close" (click)="modal.dismiss(false)">
+      <span style="color: white;">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    <span
+      >Do you really want to remove <b>{{ product.title }}</b
+      >?</span
+    >
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-success"
+      (click)="modal.dismiss(false)"
+    >
+      No
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-danger"
+      (click)="modal.close(true)"
+    >
+      Yes
+    </button>
+  </div>
+</ng-template>
+<!-- Modal end -->

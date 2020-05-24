@@ -15,7 +15,7 @@ export class ProductService {
   async create(product: Product) {
     try {
       await this.afs.collection('products').add(product);
-      this.afs
+      await this.afs
         .collection('categories')
         .doc(product.category)
         .update({ total: firebase.firestore.FieldValue.increment(1) });
@@ -68,8 +68,15 @@ export class ProductService {
     }
   }
 
-  remove(id: string, cat: string) {
-    // remove product
-    // decrement total by 1
+  async remove(id: string, cat: string) {
+    try {
+      await this.afs.collection('products').doc(id).delete();
+      await this.afs
+        .collection('categories')
+        .doc(cat)
+        .update({ total: firebase.firestore.FieldValue.increment(-1) });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { Product } from 'src/app/interfaces/product';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-update-product-form',
@@ -24,7 +25,8 @@ export class UpdateProductFormComponent implements OnInit {
     private route: ActivatedRoute,
     private catSv: CategoryService,
     private productSv: ProductService,
-    private loadingSv: LoadingBarService
+    private loadingSv: LoadingBarService,
+    private modalSv: NgbModal
   ) {}
 
   ngOnInit() {
@@ -53,5 +55,19 @@ export class UpdateProductFormComponent implements OnInit {
     this.router.navigate(['/admin/products']);
   }
 
-  delete() {}
+  async remove() {
+    this.loadingSv.on();
+    await this.productSv.remove(this.id, this.product.category);
+    this.loadingSv.off();
+    this.router.navigate(['/admin/products']);
+  }
+
+  openModal(content: any) {
+    this.modalSv.open(content).result.then(
+      (val) => {
+        if (val) this.remove();
+      },
+      () => {}
+    );
+  }
 }
