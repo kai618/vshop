@@ -30,11 +30,7 @@ export class LoadingBarComponent implements OnInit {
     this.stop();
   }
 
-<<<<<<< HEAD
   private start() {
-=======
-  start() {
->>>>>>> 6eb334b1b09bf706d6a2a170aaa10135ab74d0ba
     this.stop();
     const length = 20;
 
