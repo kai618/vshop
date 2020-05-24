@@ -1,7 +1,20 @@
-<a routerLink="/admin/products/new" class="btn btn-success mb-4">New Product</a>
+<div class="row">
+  <div class="col-12 col-md-4">
+    <a routerLink="/admin/products/new" class="btn btn-success mb-3">
+      New Product
+    </a>
+  </div>
+  <div class="col-12 col-md-8 border rounded py-3">
+    <app-pie-chart></app-pie-chart>
+  </div>
+</div>
+<br />
 
-<div *ngIf="products">
-  <table class="table table-borderless">
+<!-- search bar start -->
+<!-- search bar end -->
+<!-- data table start -->
+<div *ngIf="products; else noDataTable" class="row border rounded">
+  <table class="table table-borderless table-responsive-lg mb-0">
     <thead>
       <tr>
         <th>#</th>
@@ -39,3 +52,11 @@
     </tbody>
   </table>
 </div>
+
+<ng-template #noDataTable>
+  <div class="row border rounded">
+    <div style="height: 500px;"></div>
+  </div>
+</ng-template>
+<!-- data table end -->
+<br />

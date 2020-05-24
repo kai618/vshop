@@ -100,7 +100,7 @@
 
   <div class="col-12 col-md-5">
     <!-- Showcase Start -->
-    <div *ngIf="product.photoURL; else noDataCard" class="card showcase">
+    <div *ngIf="product.photoURL != null; else noDataCard" class="card showcase">
       <img
         #cardPhoto
         class="card-img-top card-photo"

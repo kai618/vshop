@@ -3,6 +3,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Product } from '../interfaces/product';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,10 @@ export class ProductService {
   async create(product: Product) {
     try {
       await this.afs.collection('products').add(product);
+      this.afs
+        .collection('categories')
+        .doc(product.category)
+        .update({ total: firebase.firestore.FieldValue.increment(1) });
     } catch (error) {
       console.error(error);
     }
@@ -60,5 +66,10 @@ export class ProductService {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  remove(id: string, cat: string) {
+    // remove product
+    // decrement total by 1
   }
 }

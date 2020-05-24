@@ -27,6 +27,8 @@ import { RegisterFormComponent } from './components/register/register-form/regis
 import { FormsModule } from '@angular/forms';
 import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
+import { PieChartComponent } from './components/admin/pie-chart/pie-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -47,15 +49,17 @@ import { LoadingBarComponent } from './components/loading-bar/loading-bar.compon
     NewProductFormComponent,
     UpdateProductFormComponent,
     LoadingBarComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
     NgbModule,
+    FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FormsModule,
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
