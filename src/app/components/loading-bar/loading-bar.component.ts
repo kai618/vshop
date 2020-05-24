@@ -31,6 +31,7 @@ export class LoadingBarComponent implements OnInit {
   }
 
   start() {
+    this.stop();
     const length = 20;
 
     this.interval = setInterval(() => {
