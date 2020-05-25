@@ -1,22 +1,22 @@
 $hide-color: rgb(222, 241, 222);
 
 .loading {
-  z-index: 1;
+  z-index: 1031;
   height: 4px;
   background-color: $hide-color;
   position: fixed;
-  top: 59px;
+  top: 0;
   left: 0;
   right: 0;
 }
 
 .loading-bar {
-  z-index: 2;
+  z-index: 1032;
   height: 100%;
   background-color: green;
 }
 .loading-hide {
-  z-index: 3;
+  z-index: 1033;
   top: 0;
   left: 0;
   right: 0;
