@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { of, Subscription } from 'rxjs';
-import { switchMap, combineLatest } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bs-navbar',

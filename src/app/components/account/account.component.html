@@ -21,8 +21,11 @@
         {{ userSv.user.email }}
       </div>
       <div class="row d-flex justify-content-center">
-        <div *ngFor="let role of roles | async" class="badge badge-info m-1">
-          {{ role.toUpperCase() }}
+        <div *ngIf="isAdmin" class="badge badge-info m-1">
+          Admin
+        </div>
+        <div *ngIf="isManager" class="badge badge-info m-1">
+          Manager
         </div>
       </div>
     </div>

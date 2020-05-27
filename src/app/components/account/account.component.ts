@@ -1,20 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
 })
-export class AccountComponent implements OnInit {
-  roles: Observable<string[]>;
+export class AccountComponent implements OnInit, OnDestroy {
+  isAdmin: boolean = false;
+  isManager: boolean = false;
 
-  constructor(public userSv: UserService, private authSv: AuthService) {
-    this.roles = authSv.user$.pipe(switchMap((user) => userSv.getRoles(user.uid)));
+  private adminSubscription: Subscription;
+  private managerSubscription: Subscription;
+
+  constructor(public userSv: UserService) {}
+
+  ngOnInit(): void {
+    this.adminSubscription = this.userSv
+      .isAdmin()
+      .subscribe((val) => (this.isAdmin = val));
+
+    this.managerSubscription = this.userSv
+      .isManager()
+      .subscribe((val) => (this.isManager = val));
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy() {
+    this.adminSubscription.unsubscribe();
+    this.managerSubscription.unsubscribe();
+  }
 }

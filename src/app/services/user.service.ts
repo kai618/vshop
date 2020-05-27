@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentData } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { map, mergeMap } from 'rxjs/operators';
-import { Observable, of, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable, zip, of } from 'rxjs';
 import { User } from '../interfaces/user';
 
 @Injectable({
@@ -51,34 +51,57 @@ export class UserService {
   }
 
   getRoles(uid: string): Observable<string[]> {
-    return this.afs
+    const isAdmin = this.afs
       .collection('roles')
-      .valueChanges({ idField: 'key' })
-      .pipe<{ [key: string]: DocumentData }[], string[]>(
-        mergeMap((docs) => {
-          return forkJoin(
-            docs.reduce((dict, doc) => {
-              dict[doc.key] = this.afs
-                .collection('roles')
-                .doc(doc.key)
-                .collection('role-users')
-                .doc(uid)
-                .get();
-              return dict;
-            }, {})
-          );
-        }),
-        map<{ [key: string]: DocumentData }[], string[]>((docs) => {
-          const roles = [];
-          Object.keys(docs).forEach((key) => {
-            const data = docs[key].data();
-            if (data !== undefined && data['active']) roles.push(key);
-          });
+      .doc('admin')
+      .collection('role-users')
+      .doc(uid)
+      .valueChanges();
 
-          // console.log(roles);
-          return roles;
-        })
-      );
+    const isManager = this.afs
+      .collection('roles')
+      .doc('manager')
+      .collection('role-users')
+      .doc(uid)
+      .valueChanges();
+
+    return zip(isAdmin, isManager).pipe(
+      map(([admin, mgr]) => {
+        const roles = [];
+        if (admin !== undefined && admin['active']) roles.push('admin');
+        if (mgr !== undefined && mgr['active']) roles.push('manager');
+
+        return roles;
+      })
+    );
+
+    // // this way is scalable but not synchronisable
+    // return this.afs
+    //   .collection('roles')
+    //   .valueChanges({ idField: 'key' })
+    //   .pipe<{ [key: string]: DocumentData }[], string[]>(
+    //     mergeMap((docs) => {
+    //       return forkJoin(
+    //         docs.reduce((dict, doc) => {
+    //           dict[doc.key] = this.afs
+    //             .collection('roles')
+    //             .doc(doc.key)
+    //             .collection('role-users')
+    //             .doc(uid)
+    //             .get();
+    //           return dict;
+    //         }, {})
+    //       );
+    //     }),
+    //     map<{ [key: string]: DocumentData }[], string[]>((docs) => {
+    //       const roles = [];
+    //       Object.keys(docs).forEach((key) => {
+    //         const data = docs[key].data();
+    //         if (data !== undefined && data['active']) roles.push(key);
+    //       });
+    //       return roles;
+    //     })
+    //   );
 
     //// Try a new way to get roles, not storing uid in documents
     // this.afs
@@ -110,7 +133,9 @@ export class UserService {
   //   );
   // }
 
-  isAdmin(uid: string): Observable<boolean> {
+  isAdmin(uid: string = this.user.uid): Observable<boolean> {
+    if (!uid) return of(false);
+
     const ref = this.afs
       .collection('roles')
       .doc('admin')
@@ -120,7 +145,9 @@ export class UserService {
     return ref.pipe(map((doc) => doc && doc['active']));
   }
 
-  isManager(uid: string): Observable<boolean> {
+  isManager(uid: string = this.user.uid): Observable<boolean> {
+    if (!uid) return of(false);
+
     const ref = this.afs
       .collection('roles')
       .doc('manager')
@@ -129,6 +156,7 @@ export class UserService {
       .valueChanges();
     return ref.pipe(map((doc) => doc && doc['active']));
   }
+
   capitalise(string: string): string {
     const first = string[0].toUpperCase();
     return first + string.slice(1);
