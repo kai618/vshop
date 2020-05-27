@@ -154,14 +154,16 @@
           type="text"
           class="form-control"
           #photoURL
-          (input)="this.isPhotoUrlValid = true"
+          (input)="this.isPhotoUrlValid = false"
           [ngClass]="{
             'is-valid':
-              form.controls['photoURL'].touched &&
+              (form.controls['photoURL'].dirty ||
+                form.controls['photoURL'].touched) &&
               form.controls['photoURL'].valid &&
               isPhotoUrlValid,
             'is-invalid':
-              form.controls['photoURL'].touched &&
+              (form.controls['photoURL'].dirty ||
+                form.controls['photoURL'].touched) &&
               (form.controls['photoURL'].invalid || !isPhotoUrlValid)
           }"
         />
@@ -177,6 +179,12 @@
         >
           Invalid URL
         </div>
+        <div
+          *ngIf="form.controls['photoURL'].valid && !isPhotoUrlValid"
+          class="invalid-feedback"
+        >
+          Not an image
+        </div>
       </div>
       <!-- Image URL End -->
     </form>
@@ -186,10 +194,11 @@
     <!-- Showcase Start -->
     <div class="card showcase">
       <img
-        #cardPhoto
+        #photo
         class="card-img-top card-photo"
         [src]="photoURL.value"
-        (error)="onCardPhotoError(cardPhoto)"
+        (load)="onLoadPhoto(photo)"
+        (error)="onErrorPhoto(photo)"
         alt="Image error"
       />
       <div class="card-body d-flex flex-column align-items-center">
@@ -213,7 +222,11 @@
   </div>
 </div>
 <div>
-  <button class="btn btn-success" (click)="ngForm.ngSubmit.emit()">
+  <button
+    class="btn btn-success"
+    (click)="ngForm.ngSubmit.emit()"
+    [disabled]="form.invalid || !isPhotoUrlValid"
+  >
     Create
   </button>
 </div>
