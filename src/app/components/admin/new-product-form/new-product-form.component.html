@@ -32,7 +32,7 @@
           <select
             formControlName="category"
             id="category"
-            class="form-control"
+            class="custom-select form-control"
             [ngClass]="{
               'is-valid':
                 form.controls['category'].touched &&
@@ -55,7 +55,7 @@
           </div>
         </ng-container>
         <ng-template #loadOption>
-          <select disabled id="category" class="form-control">
+          <select disabled id="category" class="custom-select form-control">
             <option>Loading...</option>
           </select>
         </ng-template>

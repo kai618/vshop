@@ -22,7 +22,7 @@
             [(ngModel)]="product.category"
             name="category"
             id="category"
-            class="form-control"
+            class="custom-select form-control"
           >
             <option *ngFor="let cat of cats" [value]="cat.id">{{
               cat.name
@@ -30,7 +30,7 @@
           </select>
         </ng-container>
         <ng-template #loadingText>
-          <select disabled id="category" class="form-control">
+          <select disabled id="category" class="custom-select form-control">
             <option>Loading...</option>
           </select>
         </ng-template>
