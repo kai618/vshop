@@ -14,11 +14,13 @@ export class ProductService {
 
   async create(product: Product) {
     try {
-      await this.afs.collection('products').add(product);
-      await this.afs
+      const createProduct = this.afs.collection('products').add(product);
+      const incrementCat = this.afs
         .collection('categories')
         .doc(product.category)
         .update({ total: firebase.firestore.FieldValue.increment(1) });
+
+      await Promise.all([createProduct, incrementCat]);
     } catch (error) {
       console.error(error);
     }
@@ -31,17 +33,20 @@ export class ProductService {
         .doc(id)
         .update(product);
 
-      const decrementCat = this.afs
-        .collection('categories')
-        .doc(oldCat)
-        .update({ total: firebase.firestore.FieldValue.increment(-1) });
+      if (product.category === oldCat) await updateProduct;
+      else {
+        const decrementCat = this.afs
+          .collection('categories')
+          .doc(oldCat)
+          .update({ total: firebase.firestore.FieldValue.increment(-1) });
 
-      const incrementCat = this.afs
-        .collection('categories')
-        .doc(product.category)
-        .update({ total: firebase.firestore.FieldValue.increment(1) });
+        const incrementCat = this.afs
+          .collection('categories')
+          .doc(product.category)
+          .update({ total: firebase.firestore.FieldValue.increment(1) });
 
-      await Promise.all([updateProduct, decrementCat, incrementCat]);
+        await Promise.all([updateProduct, decrementCat, incrementCat]);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -85,11 +90,13 @@ export class ProductService {
 
   async remove(id: string, cat: string) {
     try {
-      await this.afs.collection('products').doc(id).delete();
-      await this.afs
+      const deleteProduct = this.afs.collection('products').doc(id).delete();
+      const decrementCat = this.afs
         .collection('categories')
         .doc(cat)
         .update({ total: firebase.firestore.FieldValue.increment(-1) });
+
+      await Promise.all([deleteProduct, decrementCat]);
     } catch (error) {
       console.log(error);
     }
