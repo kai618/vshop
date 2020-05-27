@@ -96,20 +96,39 @@ export class UserService {
     //   );
   }
 
+  // isAdmin(uid: string): Observable<boolean> {
+  //   if (uid === null) return of(null);
+  //   return this.getRoles(uid).pipe(
+  //     map<string[], boolean>((roles) => roles.includes('admin'))
+  //   );
+  // }
+
+  // isManager(uid: string): Observable<boolean> {
+  //   if (uid === null) return of(null);
+  //   return this.getRoles(uid).pipe(
+  //     map<string[], boolean>((roles) => roles.includes('manager'))
+  //   );
+  // }
+
   isAdmin(uid: string): Observable<boolean> {
-    if (uid === null) return of(null);
-    return this.getRoles(uid).pipe(
-      map<string[], boolean>((roles) => roles.includes('admin'))
-    );
+    const ref = this.afs
+      .collection('roles')
+      .doc('admin')
+      .collection('role-users')
+      .doc(uid)
+      .valueChanges();
+    return ref.pipe(map((doc) => doc && doc['active']));
   }
 
   isManager(uid: string): Observable<boolean> {
-    if (uid === null) return of(null);
-    return this.getRoles(uid).pipe(
-      map<string[], boolean>((roles) => roles.includes('manager'))
-    );
+    const ref = this.afs
+      .collection('roles')
+      .doc('manager')
+      .collection('role-users')
+      .doc(uid)
+      .valueChanges();
+    return ref.pipe(map((doc) => doc && doc['active']));
   }
-
   capitalise(string: string): string {
     const first = string[0].toUpperCase();
     return first + string.slice(1);

@@ -8,9 +8,9 @@ export class CategoryService {
   constructor(private afs: AngularFirestore) {}
 
   getCategories() {
-    const data = this.afs
+    const data$ = this.afs
       .collection('categories')
       .valueChanges({ idField: 'id' });
-    return data;
+    return data$;
   }
 }

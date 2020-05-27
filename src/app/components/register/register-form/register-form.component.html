@@ -69,15 +69,18 @@
         type="password"
         class="form-control"
         [ngClass]="{
-          'is-valid': confirm.dirty && !confirmError,
-          'is-invalid': confirm.dirty && confirmError
+          'is-valid': (confirm.touched || confirm.dirty) && !confirmError,
+          'is-invalid': (confirm.touched || confirm.dirty) && confirmError
         }"
         id="confirm"
         required
         minlength="6"
         (input)="onChange(pass.value, confirm.value)"
       />
-      <div *ngIf="confirmError" class="invalid-feedback">
+      <div
+        *ngIf="(confirm.touched || confirm.dirty) && confirmError"
+        class="invalid-feedback"
+      >
         {{ confirmError }}
       </div>
     </div>
