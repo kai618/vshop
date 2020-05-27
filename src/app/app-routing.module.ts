@@ -7,10 +7,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AccountComponent } from './components/account/account.component';
-import { ProductFormComponent } from './components/admin/product-form/product-form.component';
+import { NewProductFormComponent } from './components/admin/new-product-form/new-product-form.component';
 import { ManagerGuard } from './guards/manager.guard';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
 
 const routes: Routes = [
   {
@@ -33,13 +34,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/products',
-    component: AdminProductsComponent,
+    path: 'admin/products/new',
+    component: NewProductFormComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'admin/products/new',
-    component: ProductFormComponent,
+    path: 'admin/products/:id',
+    component: UpdateProductFormComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+
+  {
+    path: 'admin/products',
+    component: AdminProductsComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
   {
