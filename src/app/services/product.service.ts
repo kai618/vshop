@@ -24,9 +24,24 @@ export class ProductService {
     }
   }
 
-  async update(id: string, product: Product) {
+  async update(id: string, product: Product, oldCat: string) {
     try {
-      await this.afs.collection('products').doc(id).update(product);
+      const updateProduct = this.afs
+        .collection('products')
+        .doc(id)
+        .update(product);
+
+      const decrementCat = this.afs
+        .collection('categories')
+        .doc(oldCat)
+        .update({ total: firebase.firestore.FieldValue.increment(-1) });
+
+      const incrementCat = this.afs
+        .collection('categories')
+        .doc(product.category)
+        .update({ total: firebase.firestore.FieldValue.increment(1) });
+
+      await Promise.all([updateProduct, decrementCat, incrementCat]);
     } catch (error) {
       console.error(error);
     }

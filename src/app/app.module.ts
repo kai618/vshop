@@ -24,7 +24,7 @@ import { FbLoginButtonComponent } from './components/login/fb-login-button/fb-lo
 import { OauthRowComponent } from './components/login/oauth-row/oauth-row.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 import { PieChartComponent } from './components/admin/pie-chart/pie-chart.component';
@@ -55,6 +55,7 @@ import { ChartsModule } from 'ng2-charts';
     BrowserModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

@@ -19,6 +19,7 @@ export class UpdateProductFormComponent implements OnInit {
   isPhotoUrlValid: boolean = true;
   product: Product = {};
   private id: string;
+  oldCat: string;
 
   constructor(
     private router: Router,
@@ -39,6 +40,7 @@ export class UpdateProductFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe((p) => {
         this.product = p;
+        this.oldCat = p.category;
         this.loadingSv.off();
       });
   }
@@ -50,7 +52,7 @@ export class UpdateProductFormComponent implements OnInit {
 
   async submit() {
     this.loadingSv.on();
-    await this.productSv.update(this.id, this.product);
+    await this.productSv.update(this.id, this.product, this.oldCat);
     this.loadingSv.off();
     this.router.navigate(['/admin/products']);
   }

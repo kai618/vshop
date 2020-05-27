@@ -1,17 +1,27 @@
-<div class="row">
+<div class="row align-content-center">
   <div class="col-12 col-md-7">
-    <form #form="ngForm" (ngSubmit)="submit()">
+    <form #ngForm="ngForm" [formGroup]="form" (ngSubmit)="submit()">
       <!-- Title Start -->
       <div class="form-group">
         <label for="title">Title</label>
         <input
-          #title
-          ngModel
-          name="title"
+          formControlName="title"
           id="title"
           type="text"
           class="form-control"
+          [ngClass]="{
+            'is-valid':
+              form.controls['title'].touched && form.controls['title'].valid,
+            'is-invalid':
+              form.controls['title'].touched && form.controls['title'].invalid
+          }"
         />
+        <div
+          *ngIf="form.controls['title'].errors?.required"
+          class="invalid-feedback"
+        >
+          Please provide a title
+        </div>
       </div>
       <!-- Title End -->
 
@@ -20,16 +30,29 @@
         <label for="category">Category</label>
         <ng-container *ngIf="categories$ | async as cats; else loadOption">
           <select
-            [ngModel]="null"
-            name="category"
+            formControlName="category"
             id="category"
             class="form-control"
+            [ngClass]="{
+              'is-valid':
+                form.controls['category'].touched &&
+                form.controls['category'].valid,
+              'is-invalid':
+                form.controls['category'].touched &&
+                form.controls['category'].invalid
+            }"
           >
-            <option [value]="null">Choose...</option>
+            <option value="">Choose...</option>
             <option *ngFor="let cat of cats" [value]="cat.id">{{
               cat.name
             }}</option>
           </select>
+          <div
+            *ngIf="form.controls['category'].errors?.required"
+            class="invalid-feedback"
+          >
+            Please choose a category
+          </div>
         </ng-container>
         <ng-template #loadOption>
           <select disabled id="category" class="form-control">
@@ -49,15 +72,33 @@
                 <span class="input-group-text">$</span>
               </div>
               <input
-                #price
-                ngModel
-                name="price"
+                formControlName="price"
                 id="price"
                 type="number"
                 min="0"
                 step="0.01"
                 class="form-control"
+                [ngClass]="{
+                  'is-valid':
+                    form.controls['price'].touched &&
+                    form.controls['price'].valid,
+                  'is-invalid':
+                    form.controls['price'].touched &&
+                    form.controls['price'].invalid
+                }"
               />
+              <div
+                *ngIf="form.controls['price'].errors?.required"
+                class="invalid-feedback"
+              >
+                Please provide a price
+              </div>
+              <div
+                *ngIf="form.controls['price'].errors?.min"
+                class="invalid-feedback"
+              >
+                Invalid price
+              </div>
             </div>
           </div>
           <!-- Price End -->
@@ -68,16 +109,35 @@
             <label for="amount">Amount</label>
             <div class="input-group">
               <input
-                ngModel
-                name="amount"
+                formControlName="amount"
                 id="amount"
                 type="number"
                 min="0"
                 step="1"
                 class="form-control"
+                [ngClass]="{
+                  'is-valid':
+                    form.controls['amount'].touched &&
+                    form.controls['amount'].valid,
+                  'is-invalid':
+                    form.controls['amount'].touched &&
+                    form.controls['amount'].invalid
+                }"
               />
               <div class="input-group-append">
                 <span class="input-group-text">kg</span>
+              </div>
+              <div
+                *ngIf="form.controls['amount'].errors?.required"
+                class="invalid-feedback"
+              >
+                Please provide an amount
+              </div>
+              <div
+                *ngIf="form.controls['amount'].errors?.min"
+                class="invalid-feedback"
+              >
+                Invalid amount
               </div>
             </div>
           </div>
@@ -87,16 +147,36 @@
 
       <!-- Image URL Start -->
       <div class="form-group">
-        <label for="photoURL">Image URL</label>
+        <label for="photoURL">Photo URL</label>
         <input
-          ngModel
-          name="photoURL"
+          formControlName="photoURL"
           id="photoURL"
           type="text"
           class="form-control"
           #photoURL
           (input)="this.isPhotoUrlValid = true"
+          [ngClass]="{
+            'is-valid':
+              form.controls['photoURL'].touched &&
+              form.controls['photoURL'].valid &&
+              isPhotoUrlValid,
+            'is-invalid':
+              form.controls['photoURL'].touched &&
+              (form.controls['photoURL'].invalid || !isPhotoUrlValid)
+          }"
         />
+        <div
+          *ngIf="form.controls['photoURL'].errors?.required"
+          class="invalid-feedback"
+        >
+          Please provide a photo URL
+        </div>
+        <div
+          *ngIf="form.controls['photoURL'].errors?.pattern"
+          class="invalid-feedback"
+        >
+          Invalid URL
+        </div>
       </div>
       <!-- Image URL End -->
     </form>
@@ -114,10 +194,18 @@
       />
       <div class="card-body d-flex flex-column align-items-center">
         <h5 class="card-title font-weight-bold">
-          {{ title.value ? title.value : "No title" }}
+          {{
+            form.controls["title"].value
+              ? form.controls["title"].value
+              : "No title"
+          }}
         </h5>
         <p class="card-text">
-          {{ price.value ? (price.value | currency: "USD") : "No price" }}
+          {{
+            form.controls["price"].value
+              ? (form.controls["price"].value | currency: "USD")
+              : "No price"
+          }}
         </p>
       </div>
     </div>
@@ -125,5 +213,7 @@
   </div>
 </div>
 <div>
-  <button class="btn btn-success" (click)="form.ngSubmit.emit()">Create</button>
+  <button class="btn btn-success" (click)="ngForm.ngSubmit.emit()">
+    Create
+  </button>
 </div>
