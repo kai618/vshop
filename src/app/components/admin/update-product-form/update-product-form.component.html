@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row form">
   <div class="col-12 col-md-7">
     <form #form="ngForm" (ngSubmit)="submit()">
       <!-- Title Start -->
@@ -98,12 +98,9 @@
     </form>
   </div>
 
-  <div class="col-12 col-md-5">
+  <div class="col-12 col-md-5 showcase">
     <!-- Showcase Start -->
-    <div
-      *ngIf="product.photoURL != null; else noDataCard"
-      class="card showcase"
-    >
+    <div *ngIf="product.photoURL != null; else noDataCard" class="card">
       <img
         #cardPhoto
         class="card-img-top card-photo"
@@ -111,7 +108,9 @@
         (error)="onCardPhotoError(cardPhoto)"
         alt=""
       />
-      <div class="card-body d-flex flex-column align-items-center">
+      <div
+        class="card-body d-flex flex-column align-items-center justify-content-center"
+      >
         <h5 class="card-title font-weight-bold">
           {{ product.title ? product.title : "No title" }}
         </h5>
