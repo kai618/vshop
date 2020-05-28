@@ -20,9 +20,11 @@ export class BsNavbarComponent implements OnInit {
 
   ngOnInit() {
     this.authSv.user$.subscribe((user) => {
-      if (!user) return;
-      if (this.adminSubscription) this.adminSubscription.unsubscribe();
-      if (this.manangerSubscription) this.manangerSubscription.unsubscribe();
+      if (!user) {
+        if (this.adminSubscription) this.adminSubscription.unsubscribe();
+        if (this.manangerSubscription) this.manangerSubscription.unsubscribe();
+        return;
+      }
 
       this.adminSubscription = this.userSv
         .isAdmin(user.uid)
