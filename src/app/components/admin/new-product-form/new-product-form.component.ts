@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
 import { Product } from 'src/app/interfaces/product';
+import { Constants } from 'src/app/constants';
 
 @Component({
   selector: 'app-new-product-form',
@@ -13,16 +14,19 @@ import { Product } from 'src/app/interfaces/product';
 })
 export class NewProductFormComponent implements OnInit {
   private noPhotoURL: string;
-  private urlRegex = `^((https|http|ftp|smtp):\/\/)(www.)?([a-z0-9]+\.)*[a-z]+(\/[a-zA-Z0-9#=?_\\-\.]+\/?)*$`;
-  categories$: any;
   isPhotoUrlValid: boolean = false;
+
+  categories$: any;
 
   form = this.fb.group({
     title: ['', [Validators.required]],
     category: ['', [Validators.required]],
     price: ['', [Validators.required, Validators.min(0)]],
     amount: ['', [Validators.required, Validators.min(0)]],
-    photoURL: ['', [Validators.required, Validators.pattern(this.urlRegex)]],
+    photoURL: [
+      '',
+      [Validators.required, Validators.pattern(Constants.urlRegex)],
+    ],
   });
 
   constructor(
