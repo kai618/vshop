@@ -10,7 +10,19 @@
           id="title"
           type="text"
           class="form-control"
+          [ngClass]="{
+            'is-valid':
+              form.controls['title'].dirty && form.controls['title'].valid,
+            'is-invalid':
+              form.controls['title'].dirty && form.controls['title'].invalid
+          }"
         />
+        <div
+          *ngIf="form.controls['title'].errors?.required"
+          class="invalid-feedback"
+        >
+          Please provide a title
+        </div>
       </div>
       <!-- Title End -->
 
@@ -23,11 +35,25 @@
             name="category"
             id="category"
             class="custom-select form-control"
+            [ngClass]="{
+              'is-valid':
+                form.controls['category'].dirty &&
+                form.controls['category'].valid,
+              'is-invalid':
+                form.controls['category'].dirty &&
+                form.controls['category'].invalid
+            }"
           >
             <option *ngFor="let cat of cats" [value]="cat.id">{{
               cat.name
             }}</option>
           </select>
+          <div
+            *ngIf="form.controls['category'].errors?.required"
+            class="invalid-feedback"
+          >
+            Please choose a category
+          </div>
         </ng-container>
         <ng-template #loadingText>
           <select disabled id="category" class="custom-select form-control">
@@ -54,7 +80,27 @@
                 min="0"
                 step="0.01"
                 class="form-control"
+                [ngClass]="{
+                  'is-valid':
+                    form.controls['price'].dirty &&
+                    form.controls['price'].valid,
+                  'is-invalid':
+                    form.controls['price'].dirty &&
+                    form.controls['price'].invalid
+                }"
               />
+              <div
+                *ngIf="form.controls['price'].errors?.required"
+                class="invalid-feedback"
+              >
+                Please provide a price
+              </div>
+              <div
+                *ngIf="form.controls['price'].errors?.min"
+                class="invalid-feedback"
+              >
+                Invalid price
+              </div>
             </div>
           </div>
           <!-- Price End -->
@@ -72,9 +118,29 @@
                 min="0"
                 step="1"
                 class="form-control"
+                [ngClass]="{
+                  'is-valid':
+                    form.controls['amount'].dirty &&
+                    form.controls['amount'].valid,
+                  'is-invalid':
+                    form.controls['amount'].dirty &&
+                    form.controls['amount'].invalid
+                }"
               />
               <div class="input-group-append">
                 <span class="input-group-text">kg</span>
+              </div>
+              <div
+                *ngIf="form.controls['amount'].errors?.required"
+                class="invalid-feedback"
+              >
+                Please provide an amount
+              </div>
+              <div
+                *ngIf="form.controls['amount'].errors?.min"
+                class="invalid-feedback"
+              >
+                Invalid amount
               </div>
             </div>
           </div>
@@ -91,8 +157,35 @@
           id="photoURL"
           type="text"
           class="form-control"
-          (input)="this.isPhotoUrlValid = true"
+          (input)="this.isPhotoUrlValid = false"
+          [ngClass]="{
+            'is-valid':
+              form.controls['photoURL'].dirty &&
+              form.controls['photoURL'].valid &&
+              isPhotoUrlValid,
+            'is-invalid':
+              form.controls['photoURL'].dirty &&
+              (form.controls['photoURL'].invalid || !isPhotoUrlValid)
+          }"
         />
+        <div
+          *ngIf="form.controls['photoURL'].errors?.required"
+          class="invalid-feedback"
+        >
+          Please provide a photo URL
+        </div>
+        <div
+          *ngIf="form.controls['photoURL'].errors?.pattern"
+          class="invalid-feedback"
+        >
+          Invalid URL
+        </div>
+        <div
+          *ngIf="form.controls['photoURL'].valid && !isPhotoUrlValid"
+          class="invalid-feedback"
+        >
+          Not an image URL
+        </div>
       </div>
       <!-- Image URL End -->
     </form>
@@ -100,11 +193,11 @@
 
   <div class="col-12 col-md-5 showcase">
     <!-- Showcase Start -->
-    <div *ngIf="product.photoURL != null; else noDataCard" class="card">
+    <div *ngIf="oldProduct.photoURL; else noDataCard" class="card">
       <img
         #photo
         class="card-img-top card-photo"
-        [src]="product.photoURL"
+        [src]="form.value.photoURL"
         (load)="onLoadPhoto(photo)"
         (error)="onErrorPhoto(photo)"
         alt=""
@@ -113,10 +206,12 @@
         class="card-body d-flex flex-column align-items-center justify-content-center"
       >
         <h5 class="card-title font-weight-bold">
-          {{ product.title ? product.title : "No title" }}
+          {{ form.value.title ? form.value.title : "No title" }}
         </h5>
         <p class="card-text">
-          {{ product.price ? (product.price | currency: "USD") : "No price" }}
+          {{
+            form.value.price ? (form.value.price | currency: "USD") : "No price"
+          }}
         </p>
       </div>
     </div>
@@ -134,7 +229,11 @@
   </div>
 </div>
 <div class="d-flex justify-content-between">
-  <button class="btn btn-success" (click)="ngForm.ngSubmit.emit()">
+  <button
+    class="btn btn-success"
+    (click)="ngForm.ngSubmit.emit()"
+    [disabled]="form.invalid || !isPhotoUrlValid || sameData"
+  >
     Update
   </button>
   <button class="btn btn-danger" (click)="openModal(removeModal)">
@@ -154,7 +253,7 @@
   </div>
   <div class="modal-body">
     <span
-      >Do you really want to remove <b>{{ product.title }}</b
+      >Do you really want to remove <b>{{ form.value.title }}</b
       >?</span
     >
   </div>
