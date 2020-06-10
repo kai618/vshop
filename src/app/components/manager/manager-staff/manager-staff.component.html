@@ -1,1 +1,48 @@
-<p>manager-staff works!</p>
+<p>All Users</p>
+<!-- user data table start -->
+<div *ngIf="users; else noDataTable" class="row border rounded">
+  <table class="table table-borderless table-responsive-lg mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Email</th>
+        <th>Name</th>
+        <th>First</th>
+        <th>Last</th>
+        <th style="width: 5%;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td data-toggle="tooltip" [title]="user.id">
+          {{ user.email }}
+        </td>
+        <td>{{ user.name }}</td>
+        <td
+          data-toggle="tooltip"
+          [title]="user.firstTime | date: 'HH:mm - dd/MM/yyyy'"
+        >
+          {{ user.firstTime | date: "dd/MM/yy" }}
+        </td>
+        <td
+          data-toggle="tooltip"
+          [title]="user.lastTime | date: 'HH:mm - dd/MM/yyyy'"
+        >
+          {{ user.lastTime | date: "dd/MM/yy" }}
+        </td>
+        <td>
+          <app-user-action-button [uid]="user.id"></app-user-action-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noDataTable>
+  <div class="row border rounded">
+    <div style="height: 200px;"></div>
+  </div>
+</ng-template>
+<!-- user data table end -->
+<br />

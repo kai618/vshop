@@ -29,6 +29,8 @@ import { UpdateProductFormComponent } from './components/admin/update-product-fo
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 import { PieChartComponent } from './components/admin/pie-chart/pie-chart.component';
 import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
+import { UserActionButtonComponent } from './components/manager/user-action-button/user-action-button.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { ChartsModule } from 'ng2-charts';
     UpdateProductFormComponent,
     LoadingBarComponent,
     PieChartComponent,
+    UserActionButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { ChartsModule } from 'ng2-charts';
     AngularFirestoreModule,
     AngularFireAuthModule,
     ChartsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
