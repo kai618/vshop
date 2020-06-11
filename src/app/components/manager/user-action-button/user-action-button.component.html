@@ -1,7 +1,9 @@
 <div ngbDropdown placement="bottom-right" class="d-inline-block">
   <button class="btn btn-light btn-sm" ngbDropdownToggle></button>
   <div ngbDropdownMenu>
-    <button ngbDropdownItem (click)="grantAdmin()">Grant Admin</button>
+    <button *ngIf="!isAdmin" ngbDropdownItem (click)="grantAdmin()">
+      Grant Admin
+    </button>
     <button ngbDropdownItem>Block?</button>
   </div>
 </div>

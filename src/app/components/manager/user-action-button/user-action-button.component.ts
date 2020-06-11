@@ -9,6 +9,7 @@ import { LoadingBarService } from 'src/app/services/loading-bar.service';
 })
 export class UserActionButtonComponent implements OnInit {
   @Input() uid: string;
+  @Input() isAdmin: boolean;
 
   constructor(
     private staffSv: StaffService,

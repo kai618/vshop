@@ -1,4 +1,4 @@
-<h5><b>ADMINS</b></h5>
+<h5><b>Admins</b></h5>
 <!-- admin data table start -->
 <div *ngIf="admins; else noDataTableAdmin" class="row border rounded">
   <table class="table table-borderless table-responsive-lg mb-0">
@@ -53,9 +53,9 @@
   </div>
 </ng-template>
 <!-- admin data table end -->
-<br />
+<div class="p-3"></div>
 
-<p>All Users</p>
+<h5><b>Users</b></h5>
 <!-- user data table start -->
 <div *ngIf="users; else noDataTableUser" class="row border rounded">
   <table class="table table-borderless table-responsive-lg mb-0">
@@ -89,7 +89,10 @@
           {{ user.lastTime | date: "dd/MM/yy" }}
         </td>
         <td>
-          <app-user-action-button [uid]="user.id"></app-user-action-button>
+          <app-user-action-button
+            [uid]="user.id"
+            [isAdmin]="isAdmin(user.id)"
+          ></app-user-action-button>
         </td>
       </tr>
     </tbody>
@@ -102,4 +105,4 @@
   </div>
 </ng-template>
 <!-- user data table end -->
-<br />
+<div class="p-5"></div>

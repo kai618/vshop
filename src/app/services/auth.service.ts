@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +20,8 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private router: Router,
-    private userSv: UserService
+    private userSv: UserService,
+    private afs: AngularFirestore
   ) {
     this.user$ = afAuth.authState.pipe(
       map<firebase.User, User>((user) => this.userSv.toUser(user))
@@ -63,11 +66,16 @@ export class AuthService {
         email,
         pass
       );
+      console.log(credential.user.uid);
+      await this.checkBlockedUser(credential.user.uid);
+
       this.router.navigateByUrl(returnUrl);
       this.userSv.storeInFirestore(credential.user);
     } catch (error) {
       console.error(error);
       switch (error.code) {
+        case 'auth/blocked-email':
+          throw new Error(error.message);
         case 'auth/wrong-password':
         case 'auth/user-not-found':
           throw new Error('The email or password was wrong!');
@@ -83,6 +91,7 @@ export class AuthService {
         email,
         pass
       );
+
       this.router.navigate(['/']);
       this.userSv.storeInFirestore(credential.user);
     } catch (error) {
@@ -103,6 +112,24 @@ export class AuthService {
       await this.afAuth.auth.signOut();
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async checkBlockedUser(uid: string): Promise<void> {
+    try {
+      const snapshot = await this.afs
+        .collection('blocked-users')
+        .doc(uid)
+        .get()
+        .toPromise();
+
+      if (snapshot.exists) {
+        throw { code: 'auth/blocked-email', message: 'This email is blocked!' };
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      this.logout();
     }
   }
 }

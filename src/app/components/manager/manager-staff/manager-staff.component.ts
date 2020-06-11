@@ -49,4 +49,8 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
     });
     return fullInfo;
   }
+
+  isAdmin(uid: string) {
+    return this.admins.some((admin) => admin.id == uid);
+  }
 }
