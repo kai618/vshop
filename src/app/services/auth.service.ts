@@ -37,6 +37,8 @@ export class AuthService {
         new firebase.auth.GoogleAuthProvider()
       );
 
+      await this.checkBlockedUser(credential.user.uid);
+
       this.router.navigateByUrl(returnUrl);
       this.userSv.storeInFirestore(credential.user);
     } catch (error) {
@@ -50,6 +52,9 @@ export class AuthService {
       const credential = await this.afAuth.auth.signInWithPopup(
         new firebase.auth.FacebookAuthProvider()
       );
+
+      await this.checkBlockedUser(credential.user.uid);
+
       this.router.navigateByUrl(returnUrl);
       this.userSv.storeInFirestore(credential.user);
     } catch (error) {
@@ -66,7 +71,7 @@ export class AuthService {
         email,
         pass
       );
-      console.log(credential.user.uid);
+
       await this.checkBlockedUser(credential.user.uid);
 
       this.router.navigateByUrl(returnUrl);
@@ -124,12 +129,14 @@ export class AuthService {
         .toPromise();
 
       if (snapshot.exists) {
-        throw { code: 'auth/blocked-email', message: 'This email is blocked!' };
+        this.logout();
+        throw {
+          code: 'auth/blocked-email',
+          message: 'This email address is blocked!',
+        };
       }
     } catch (error) {
       throw error;
-    } finally {
-      this.logout();
     }
   }
 }

@@ -4,6 +4,8 @@
     <button *ngIf="!isAdmin" ngbDropdownItem (click)="grantAdmin()">
       Grant Admin
     </button>
-    <button ngbDropdownItem>Block?</button>
+    <button ngbDropdownItem (click)="setBlockStatus()">
+      {{ isBlocked ? "Unblock" : "Block" }}
+    </button>
   </div>
 </div>

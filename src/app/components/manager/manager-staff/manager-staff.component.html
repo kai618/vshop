@@ -57,7 +57,10 @@
 
 <h5><b>Users</b></h5>
 <!-- user data table start -->
-<div *ngIf="users; else noDataTableUser" class="row border rounded">
+<div
+  *ngIf="users && admins && blockedUserIds; else noDataTableUser"
+  class="row border rounded"
+>
   <table class="table table-borderless table-responsive-lg mb-0">
     <thead>
       <tr>
@@ -70,7 +73,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users; let i = index">
+      <tr
+        *ngFor="let user of users; let i = index"
+        [ngClass]="{
+          'table-danger': isBlocked(user.id)
+        }"
+      >
         <td>{{ i + 1 }}</td>
         <td data-toggle="tooltip" [title]="user.id">
           {{ user.email }}
@@ -92,6 +100,7 @@
           <app-user-action-button
             [uid]="user.id"
             [isAdmin]="isAdmin(user.id)"
+            [isBlocked]="isBlocked(user.id)"
           ></app-user-action-button>
         </td>
       </tr>

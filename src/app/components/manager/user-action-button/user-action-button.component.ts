@@ -10,6 +10,7 @@ import { LoadingBarService } from 'src/app/services/loading-bar.service';
 export class UserActionButtonComponent implements OnInit {
   @Input() uid: string;
   @Input() isAdmin: boolean;
+  @Input() isBlocked: boolean;
 
   constructor(
     private staffSv: StaffService,
@@ -23,6 +24,17 @@ export class UserActionButtonComponent implements OnInit {
     try {
       this.loadingSv.on();
       await this.staffSv.grantAdmin(this.uid);
+    } catch (error) {
+    } finally {
+      this.loadingSv.off();
+    }
+  }
+
+  async setBlockStatus() {
+    if (!this.uid) return;
+    try {
+      this.loadingSv.on();
+      await this.staffSv.setUserBlockStatus(this.uid, !this.isBlocked);
     } catch (error) {
     } finally {
       this.loadingSv.off();

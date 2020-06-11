@@ -33,6 +33,22 @@ export class StaffService {
 
     return ref;
   }
+  getAllBlockedUserIds(): Observable<string[]> {
+    const ref = this.afs
+      .collection('blocked-users')
+      .snapshotChanges()
+      .pipe(
+        map<DocumentChangeAction<firebase.firestore.DocumentData>[], string[]>(
+          (actions) => {
+            const ids = [];
+            actions.forEach((action) => ids.push(action.payload.doc.id));
+            return ids;
+          }
+        )
+      );
+
+    return ref;
+  }
 
   async getAllUsers(): Promise<any> {
     const url = 'https://veggie-shop.herokuapp.com/users';
@@ -91,6 +107,21 @@ export class StaffService {
     try {
       const result = await this.http
         .delete<boolean>(url, { headers: this.header })
+        .pipe(take(1))
+        .toPromise();
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async setUserBlockStatus(uid: string, status: boolean): Promise<boolean> {
+    const url = `https://veggie-shop.herokuapp.com/user/${uid}/${status}`;
+
+    try {
+      const result = await this.http
+        .put<boolean>(url, { headers: this.header })
         .pipe(take(1))
         .toPromise();
       return result;
