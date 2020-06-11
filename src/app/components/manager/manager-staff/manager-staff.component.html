@@ -1,4 +1,4 @@
-<p>All Admins</p>
+<h5><b>ADMINS</b></h5>
 <!-- admin data table start -->
 <div *ngIf="admins; else noDataTableAdmin" class="row border rounded">
   <table class="table table-borderless table-responsive-lg mb-0">
@@ -6,7 +6,7 @@
       <tr>
         <th>#</th>
         <th>Email</th>
-        <th>Name</th>
+        <th>ID</th>
         <th>First</th>
         <th>Last</th>
         <th style="width: 5%;"></th>
@@ -23,7 +23,7 @@
         <td data-toggle="tooltip" [title]="admin.id">
           {{ admin.email }}
         </td>
-        <td>{{ admin.name }}</td>
+        <td>{{ admin.id }}</td>
         <td
           data-toggle="tooltip"
           [title]="admin.firstTime | date: 'HH:mm - dd/MM/yyyy'"

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { StaffService } from 'src/app/services/staff.service';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-user-action-button',
@@ -9,14 +10,21 @@ import { StaffService } from 'src/app/services/staff.service';
 export class UserActionButtonComponent implements OnInit {
   @Input() uid: string;
 
-  constructor(private staffSv: StaffService) {}
+  constructor(
+    private staffSv: StaffService,
+    private loadingSv: LoadingBarService
+  ) {}
 
   ngOnInit(): void {}
 
-  grantAdmin() {
+  async grantAdmin() {
     if (!this.uid) return;
     try {
-      this.staffSv.grantAdmin(this.uid);
-    } catch (error) {}
+      this.loadingSv.on();
+      await this.staffSv.grantAdmin(this.uid);
+    } catch (error) {
+    } finally {
+      this.loadingSv.off();
+    }
   }
 }

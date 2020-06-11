@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StaffService } from 'src/app/services/staff.service';
 import { Subscription } from 'rxjs';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-manager-staff',
@@ -13,10 +14,15 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
 
   private adminsSubscription: Subscription;
 
-  constructor(private staffSv: StaffService) {}
+  constructor(
+    private staffSv: StaffService,
+    private loadingSv: LoadingBarService
+  ) {}
 
   ngOnInit(): void {
+    this.loadingSv.on();
     this.staffSv.getAllUsers().then((users) => {
+      this.loadingSv.off();
       this.users = users;
       this.adminsSubscription = this.staffSv
         .getAllAdminIds()
@@ -41,7 +47,6 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
         ...user,
       });
     });
-
     return fullInfo;
   }
 }
