@@ -27,7 +27,7 @@ export class LoginFormComponent {
       );
     } catch (error) {
       this.error = error.message;
-      this.form.reset();
+      // this.form.reset();
     } finally {
       this.loadingSv.off();
     }

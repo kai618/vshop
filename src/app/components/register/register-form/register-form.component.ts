@@ -35,7 +35,7 @@ export class RegisterFormComponent {
       );
     } catch (error) {
       this.requestError = error.message;
-      this.form.reset();
+      // this.form.reset();
     } finally {
       this.loadingSv.off();
     }
