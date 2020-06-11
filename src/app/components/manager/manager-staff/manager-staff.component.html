@@ -1,6 +1,63 @@
+<p>All Admins</p>
+<!-- admin data table start -->
+<div *ngIf="admins; else noDataTableAdmin" class="row border rounded">
+  <table class="table table-borderless table-responsive-lg mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Email</th>
+        <th>Name</th>
+        <th>First</th>
+        <th>Last</th>
+        <th style="width: 5%;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let admin of admins; let i = index"
+        [ngClass]="{
+          'table-secondary': !admin.active
+        }"
+      >
+        <td>{{ i + 1 }}</td>
+        <td data-toggle="tooltip" [title]="admin.id">
+          {{ admin.email }}
+        </td>
+        <td>{{ admin.name }}</td>
+        <td
+          data-toggle="tooltip"
+          [title]="admin.firstTime | date: 'HH:mm - dd/MM/yyyy'"
+        >
+          {{ admin.firstTime | date: "dd/MM/yy" }}
+        </td>
+        <td
+          data-toggle="tooltip"
+          [title]="admin.lastTime | date: 'HH:mm - dd/MM/yyyy'"
+        >
+          {{ admin.lastTime | date: "dd/MM/yy" }}
+        </td>
+        <td>
+          <app-admin-action-button
+            [uid]="admin.id"
+            [status]="admin.active"
+          ></app-admin-action-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noDataTableAdmin>
+  <div class="row border rounded">
+    <div style="height: 200px;"></div>
+  </div>
+</ng-template>
+<!-- admin data table end -->
+<br />
+
 <p>All Users</p>
 <!-- user data table start -->
-<div *ngIf="users; else noDataTable" class="row border rounded">
+<div *ngIf="users; else noDataTableUser" class="row border rounded">
   <table class="table table-borderless table-responsive-lg mb-0">
     <thead>
       <tr>
@@ -39,9 +96,9 @@
   </table>
 </div>
 
-<ng-template #noDataTable>
+<ng-template #noDataTableUser>
   <div class="row border rounded">
-    <div style="height: 200px;"></div>
+    <div style="height: 300px;"></div>
   </div>
 </ng-template>
 <!-- user data table end -->

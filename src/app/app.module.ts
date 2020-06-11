@@ -31,6 +31,7 @@ import { PieChartComponent } from './components/admin/pie-chart/pie-chart.compon
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { UserActionButtonComponent } from './components/manager/user-action-button/user-action-button.component';
+import { AdminActionButtonComponent } from './components/manager/admin-action-button/admin-action-button.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { UserActionButtonComponent } from './components/manager/user-action-butt
     LoadingBarComponent,
     PieChartComponent,
     UserActionButtonComponent,
+    AdminActionButtonComponent,
   ],
   imports: [
     BrowserModule,

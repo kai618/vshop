@@ -1,0 +1,9 @@
+<div ngbDropdown placement="bottom-right" class="d-inline-block">
+  <button class="btn btn-light btn-sm" ngbDropdownToggle></button>
+  <div ngbDropdownMenu>
+    <button ngbDropdownItem (click)="setAdminStatus()">
+      {{ status ? "Deactivate" : "Activate" }}
+    </button>
+    <button ngbDropdownItem (click)="removeAdmin()">Remove</button>
+  </div>
+</div>
