@@ -1,31 +1,33 @@
-<div class="d-flex justify-content-center">
-  <div class="card shadow-sm">
-    <!-- <img
-      *ngIf="userSv.user.photoURL; else noAvatar"
-      class="card-img-top"
-      [src]="userSv.user.photoURL"
-      alt="User Photo"
-    />
-    <ng-template #noAvatar>
-      <img
-        class="card-img-top no-avatar p-3"
-        src="../../../assets/auth/no-avatar.png"
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="card shadow-sm">
+      <!-- <img
+        *ngIf="userSv.user.photoURL; else noAvatar"
+        class="card-img-top"
+        [src]="userSv.user.photoURL"
         alt="User Photo"
       />
-    </ng-template> -->
-    <div class="card-title d-flex justify-content-center pb-0 pt-4 mb-0">
-      <b>{{ userSv.user.displayName }}</b>
-    </div>
-    <div class="card-body">
-      <div class="d-flex justify-content-center">
-        {{ userSv.user.email }}
+      <ng-template #noAvatar>
+        <img
+          class="card-img-top no-avatar p-3"
+          src="../../../assets/auth/no-avatar.png"
+          alt="User Photo"
+        />
+      </ng-template> -->
+      <div class="card-title d-flex justify-content-center pb-0 pt-4 mb-0">
+        <b>{{ userSv.user.displayName }}</b>
       </div>
-      <div class="row d-flex justify-content-center">
-        <div *ngIf="isAdmin" class="badge badge-info m-1">
-          Admin
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          {{ userSv.user.email }}
         </div>
-        <div *ngIf="isManager" class="badge badge-info m-1">
-          Manager
+        <div class="row d-flex justify-content-center">
+          <div *ngIf="isAdmin" class="badge badge-info m-1">
+            Admin
+          </div>
+          <div *ngIf="isManager" class="badge badge-info m-1">
+            Manager
+          </div>
         </div>
       </div>
     </div>

@@ -12,6 +12,8 @@ import { ManagerGuard } from './guards/manager.guard';
 import { ManagerStaffComponent } from './components/manager/manager-staff/manager-staff.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { ManagerPageComponent } from './components/manager/manager-page/manager-page.component';
 
 const routes: Routes = [
   {
@@ -34,25 +36,38 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/products/new',
-    component: NewProductFormComponent,
+    path: 'admin',
+    component: AdminPageComponent,
     canActivate: [AuthGuard, AdminGuard],
+    children: [
+      {
+        path: 'products/new',
+        component: NewProductFormComponent,
+        canActivate: [AuthGuard, AdminGuard],
+      },
+      {
+        path: 'products/:id',
+        component: UpdateProductFormComponent,
+        canActivate: [AuthGuard, AdminGuard],
+      },
+      {
+        path: '',
+        component: AdminProductsComponent,
+        canActivate: [AuthGuard, AdminGuard],
+      },
+    ],
   },
   {
-    path: 'admin/products/:id',
-    component: UpdateProductFormComponent,
-    canActivate: [AuthGuard, AdminGuard],
-  },
-
-  {
-    path: 'admin/products',
-    component: AdminProductsComponent,
-    canActivate: [AuthGuard, AdminGuard],
-  },
-  {
-    path: 'manager/staff',
-    component: ManagerStaffComponent,
+    path: 'manager',
+    component: ManagerPageComponent,
     canActivate: [AuthGuard, ManagerGuard],
+    children: [
+      {
+        path: '',
+        component: ManagerStaffComponent,
+        canActivate: [AuthGuard, ManagerGuard],
+      },
+    ],
   },
   {
     path: '**',
