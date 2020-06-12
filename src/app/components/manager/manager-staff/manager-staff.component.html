@@ -1,7 +1,10 @@
 <h5><b>Admins</b></h5>
 <!-- admin data table start -->
-<div *ngIf="admins; else noDataTableAdmin" class="row border rounded">
-  <table class="table table-borderless table-responsive-lg mb-0">
+<div
+  *ngIf="admins; else noDataTableAdmin"
+  class="row border rounded table-responsive-xl"
+>
+  <table class="table table-borderless mb-0">
     <thead>
       <tr>
         <th>#</th>
@@ -59,9 +62,9 @@
 <!-- user data table start -->
 <div
   *ngIf="users && admins && blockedUserIds; else noDataTableUser"
-  class="row border rounded"
+  class="row border rounded table-responsive-xl"
 >
-  <table class="table table-borderless table-responsive-lg mb-0">
+  <table class="table table-borderless mb-0">
     <thead>
       <tr>
         <th>#</th>
