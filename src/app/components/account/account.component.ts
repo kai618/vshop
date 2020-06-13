@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.adminSubscription?.unsubscribe();
-    this.managerSubscription?.unsubscribe();
+    if (this.adminSubscription) this.adminSubscription.unsubscribe();
+    if (this.managerSubscription) this.managerSubscription.unsubscribe();
   }
 }

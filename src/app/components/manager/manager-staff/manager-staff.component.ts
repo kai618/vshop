@@ -50,8 +50,9 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.adminsSubscription?.unsubscribe();
-    this.blockedUserSubscription?.unsubscribe();
+    if (this.adminsSubscription) this.adminsSubscription.unsubscribe();
+    if (this.blockedUserSubscription)
+      this.blockedUserSubscription.unsubscribe();
   }
 
   getFullAdminInfo(adminInfo: any[], users: any[]): any[] {
