@@ -14,6 +14,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { UpdateProductFormComponent } from './components/admin/update-product-form/update-product-form.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { ManagerPageComponent } from './components/manager/manager-page/manager-page.component';
+import { ProductSearchComponent } from './components/admin/product-search/product-search.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
       {
         path: 'products/new',
         component: NewProductFormComponent,
+        canActivate: [AuthGuard, AdminGuard],
+      },
+      {
+        path: 'products/search',
+        component: ProductSearchComponent,
         canActivate: [AuthGuard, AdminGuard],
       },
       {

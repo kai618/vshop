@@ -1,5 +1,16 @@
-<div class="side-bar">
-  <div>
-    Side bar
+<div class="side-bar shadow-sm">
+  <div *ngIf="isManager">
+    <div class="title">Members</div>
+    <div class="divider"></div>
+    <a routerLink="/manager" class="action">Dashboard</a>
+    <div style="height: 100px;"></div>
+  </div>
+
+  <div *ngIf="isAdmin">
+    <div class="title">Products</div>
+    <div class="divider"></div>
+    <a routerLink="/admin" class="action">Dashboard</a>
+    <a routerLink="/admin/products/new" class="action">New</a>
+    <a routerLink="/admin/products/search" class="action">Search</a>
   </div>
 </div>

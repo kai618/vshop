@@ -34,7 +34,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   toEditPage(id: string) {

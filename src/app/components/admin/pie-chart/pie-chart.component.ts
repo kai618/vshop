@@ -28,7 +28,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
       backgroundColor: [],
     },
   ];
-  private width = 992;
+  private width = 1100;
   private subscription: Subscription;
 
   constructor(private catSv: CategoryService) {}
@@ -61,7 +61,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])

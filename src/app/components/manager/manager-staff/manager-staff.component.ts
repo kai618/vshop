@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StaffService } from 'src/app/services/staff.service';
 import { Subscription } from 'rxjs';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-manager-staff',
@@ -18,7 +19,8 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
 
   constructor(
     private staffSv: StaffService,
-    private loadingSv: LoadingBarService
+    private loadingSv: LoadingBarService,
+    private userSv: UserService
   ) {}
 
   ngOnInit(): void {
@@ -30,8 +32,13 @@ export class ManagerStaffComponent implements OnInit, OnDestroy {
       this.adminsSubscription = this.staffSv
         .getAllAdminIds()
         .subscribe((adminIfo) => {
+          // console.log(adminIfo);
+
+          // FIXME: something wrong happens with firestore when there are two subcollections having the same name
+          if (adminIfo.length == 1 && adminIfo[0]['id'] == this.userSv.user.uid)
+            return;
+
           this.admins = this.getFullAdminInfo(adminIfo, this.users);
-          // console.log(this.admins);
         });
 
       this.blockedUserSubscription = this.staffSv

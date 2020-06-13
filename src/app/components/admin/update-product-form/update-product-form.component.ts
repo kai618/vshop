@@ -66,7 +66,7 @@ export class UpdateProductFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.valueChangesSub.unsubscribe();
+    this.valueChangesSub?.unsubscribe();
   }
 
   setOnValueChanges() {

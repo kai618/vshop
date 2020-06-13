@@ -35,6 +35,7 @@ import { AdminActionButtonComponent } from './components/manager/admin-action-bu
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { StaffSideBarComponent } from './components/staff-side-bar/staff-side-bar.component';
 import { ManagerPageComponent } from './components/manager/manager-page/manager-page.component';
+import { ProductSearchComponent } from './components/admin/product-search/product-search.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ManagerPageComponent } from './components/manager/manager-page/manager-
     AdminPageComponent,
     StaffSideBarComponent,
     ManagerPageComponent,
+    ProductSearchComponent,
   ],
   imports: [
     BrowserModule,
