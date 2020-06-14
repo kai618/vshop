@@ -1,1 +1,41 @@
-<p>product-search works!</p>
+<div>
+  <!-- category multi-option modal start -->
+  <app-multi-select-cat></app-multi-select-cat>
+  <!-- category multi-option modal end -->
+
+  <!-- amount type start -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="amount-type">Amount</label>
+    </div>
+    <select class="custom-select" id="amount-type">
+      <option selected>All</option>
+      <option value="1">In Stock</option>
+      <option value="2">Nearly Out of Stock</option>
+      <option value="3">Out of Stock</option>
+    </select>
+  </div>
+  <!-- amount type end -->
+
+  <!-- price start -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Price</span>
+    </div>
+    <input type="number" class="form-control" placeholder="Min" />
+    <input type="number" class="form-control" placeholder="Max" />
+  </div>
+  <!-- price end -->
+
+  <!-- title keyword input start -->
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Title</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Keyword" />
+  </div>
+  <!-- title keyword input end -->
+
+  <!-- search button -->
+  <button class="btn btn-success">Search</button>
+</div>

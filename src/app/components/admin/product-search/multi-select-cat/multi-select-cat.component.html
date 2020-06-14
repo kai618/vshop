@@ -1,0 +1,58 @@
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text">Category</label>
+  </div>
+  <input
+    *ngIf="categories; else loadingDiv"
+    class="form-control"
+    (mousedown)="onSelectCategories($event, catSelectionModal)"
+    [value]="selectedValues"
+  />
+
+  <ng-template #loadingDiv>
+    <input disabled class="form-control" value="Loading..." />
+  </ng-template>
+</div>
+
+<!-- Modal start -->
+<ng-template #catSelectionModal let-modal>
+  <div
+    class="modal-header bg-success d-flex justify-content-center align-items-center"
+  >
+    <span class="modal-title">
+      Categories
+    </span>
+  </div>
+  <div class="modal-body">
+    <div class="custom-control custom-checkbox">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="all"
+        value="null"
+      />
+      <label class="custom-control-label" for="all">All Categories</label>
+    </div>
+
+    <div class="custom-control custom-checkbox" *ngFor="let cat of categories">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        [id]="cat.id"
+        [value]="cat.id"
+      />
+      <label class="custom-control-label" [for]="cat.id">{{ cat.name }}</label>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-success"
+      (click)="modal.close(true)"
+    >
+      Accept
+    </button>
+  </div>
+</ng-template>
+<!-- Modal end -->

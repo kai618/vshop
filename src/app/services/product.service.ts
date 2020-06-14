@@ -5,12 +5,19 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { AmountType } from '../interfaces/amount-type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   constructor(private afs: AngularFirestore) {}
+
+  getAmountType(amount: number): AmountType {
+    if (amount >= 20) return AmountType.InStock;
+    if (amount >= 1) return AmountType.NearlyOutOfStock;
+    return AmountType.OutOfStock;
+  }
 
   async create(product: Product) {
     try {
@@ -102,3 +109,5 @@ export class ProductService {
     }
   }
 }
+
+

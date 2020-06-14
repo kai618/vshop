@@ -36,6 +36,8 @@ import { AdminPageComponent } from './components/admin/admin-page/admin-page.com
 import { StaffSideBarComponent } from './components/staff-side-bar/staff-side-bar.component';
 import { ManagerPageComponent } from './components/manager/manager-page/manager-page.component';
 import { ProductSearchComponent } from './components/admin/product-search/product-search.component';
+import { MultiSelectCatComponent } from './components/admin/product-search/multi-select-cat/multi-select-cat.component';
+
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { ProductSearchComponent } from './components/admin/product-search/produc
     StaffSideBarComponent,
     ManagerPageComponent,
     ProductSearchComponent,
+    MultiSelectCatComponent,
   ],
   imports: [
     BrowserModule,

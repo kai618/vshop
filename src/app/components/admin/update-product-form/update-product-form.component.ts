@@ -122,7 +122,7 @@ export class UpdateProductFormComponent implements OnInit, OnDestroy {
   }
 
   openModal(content: any) {
-    this.modalSv.open(content).result.then(
+    this.modalSv.open(content, { centered: true }).result.then(
       (val) => {
         if (val) this.remove();
       },

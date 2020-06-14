@@ -26,10 +26,7 @@
     <tbody>
       <tr
         *ngFor="let p of products; let i = index"
-        [ngClass]="{
-          'table-warning': p.amount > 0 && p.amount < 20,
-          'table-danger': p.amount == 0
-        }"
+        [ngClass]="getAmountClass(p.amount)"
       >
         <td>{{ i + 1 }}</td>
         <td>{{ p.title }}</td>
