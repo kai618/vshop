@@ -131,6 +131,6 @@ export class UpdateProductFormComponent implements OnInit, OnDestroy {
   }
 
   toProductsPage() {
-    this.router.navigate(['/admin/products']);
+    this.router.navigate(['/admin']);
   }
 }

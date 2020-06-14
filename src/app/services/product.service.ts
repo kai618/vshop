@@ -111,16 +111,21 @@ export class ProductService {
 
   async search(filter: Object): Promise<any[]> {
     try {
-      const results = await this.afs
+      let results = await this.afs
         .collection('products', (ref) => {
-          ref.where('category', 'in', filter['cat']);
-          const newRef = this.buildRefOnAmountType(ref, filter['amount']);
-
-          return newRef;
+          const query1 = ref.where('category', 'in', filter['cat']);
+          const query2 = this.buildRefOnAmountType(query1, filter['amount']);
+          return query2;
         })
         .valueChanges({ idField: 'id' })
         .pipe(take(1))
         .toPromise();
+
+      if (filter['keyword']) {
+        results = results.filter((p) =>
+          p['title'].toLowerCase().includes(filter['keyword'].toLowerCase())
+        );
+      }
       return results;
     } catch (error) {
       console.error(error);
@@ -128,13 +133,14 @@ export class ProductService {
   }
 
   private buildRefOnAmountType(
-    ref: CollectionReference,
+    query: CollectionReference | firebase.firestore.Query,
     type: AmountType
-  ): CollectionReference | firebase.firestore.Query {
-    if (type == AmountType.All) return ref.orderBy('createDate', 'desc');
-    else if (type == AmountType.InStock) return ref.where('amount', '>=', 20);
+  ): firebase.firestore.Query {
+    if (type == AmountType.All) return query.orderBy('createDate', 'desc');
+    else if (type == AmountType.InStock) return query.where('amount', '>=', 20);
     else if (type == AmountType.NearlyOutOfStock)
-      return ref.where('amount', '>', 0).where('amount', '<', 20);
-    else if (type == AmountType.OutOfStock) return ref.where('amount', '==', 0);
+      return query.where('amount', '>', 0).where('amount', '<', 20);
+    else if (type == AmountType.OutOfStock)
+      return query.where('amount', '==', 0);
   }
 }

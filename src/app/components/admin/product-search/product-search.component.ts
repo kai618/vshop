@@ -10,9 +10,11 @@ import { LoadingBarService } from 'src/app/services/loading-bar.service';
   styleUrls: ['./product-search.component.scss'],
 })
 export class ProductSearchComponent implements OnInit {
+  products: any[];
+
   categories: string[];
   amountType: AmountType = AmountType.All;
-  products: any[];
+  keyword: string;
 
   constructor(
     private productSv: ProductService,
@@ -31,6 +33,7 @@ export class ProductSearchComponent implements OnInit {
     this.products = await this.productSv.search({
       cat: this.categories,
       amount: this.amountType,
+      keyword: this.keyword,
     });
     this.loadingSv.off();
   }
