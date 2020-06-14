@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { AmountType } from '../interfaces/amount-type';
+import { Filter } from '../interfaces/filter';
 
 @Injectable({
   providedIn: 'root',
@@ -109,21 +110,21 @@ export class ProductService {
     return AmountType.OutOfStock;
   }
 
-  async search(filter: Object): Promise<any[]> {
+  async search(filter: Filter): Promise<any[]> {
     try {
       let results = await this.afs
         .collection('products', (ref) => {
-          const query1 = ref.where('category', 'in', filter['cat']);
-          const query2 = this.buildRefOnAmountType(query1, filter['amount']);
+          const query1 = ref.where('category', 'in', filter.categories);
+          const query2 = this.buildRefOnAmountType(query1, filter.amountType);
           return query2;
         })
         .valueChanges({ idField: 'id' })
         .pipe(take(1))
         .toPromise();
 
-      if (filter['keyword']) {
+      if (filter.keyword) {
         results = results.filter((p) =>
-          p['title'].toLowerCase().includes(filter['keyword'].toLowerCase())
+          p['title'].toLowerCase().includes(filter.keyword.toLowerCase())
         );
       }
       return results;

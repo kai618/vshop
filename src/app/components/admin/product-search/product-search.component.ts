@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { AmountType } from 'src/app/interfaces/amount-type';
 import { Router } from '@angular/router';
 import { LoadingBarService } from 'src/app/services/loading-bar.service';
+import { Filter } from 'src/app/interfaces/filter';
 
 @Component({
   selector: 'app-product-search',
@@ -30,9 +31,9 @@ export class ProductSearchComponent implements OnInit {
 
   async search() {
     this.loadingSv.on();
-    this.products = await this.productSv.search({
-      cat: this.categories,
-      amount: this.amountType,
+    this.products = await this.productSv.search(<Filter>{
+      categories: this.categories,
+      amountType: this.amountType,
       keyword: this.keyword,
     });
     this.loadingSv.off();
