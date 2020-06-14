@@ -8,11 +8,15 @@
     <div class="input-group-prepend">
       <label class="input-group-text" for="amount-type">Amount</label>
     </div>
-    <select class="custom-select" id="amount-type">
-      <option selected>All</option>
-      <option value="1">In Stock</option>
-      <option value="2">Nearly Out of Stock</option>
-      <option value="3">Out of Stock</option>
+    <select
+      class="custom-select"
+      id="amount-type"
+      (input)="onSelectAmountType($event.target.value)"
+    >
+      <option value="All" selected>All</option>
+      <option value="InStock">In Stock</option>
+      <option value="NearlyOutOfStock">Nearly Out of Stock</option>
+      <option value="OutOfStock">Out of Stock</option>
     </select>
   </div>
   <!-- amount type end -->
@@ -43,7 +47,7 @@
 <!-- search result start -->
 <div
   *ngIf="products != null && products.length > 0"
-  class="row border rounded mt-4"
+  class="row border rounded my-4"
 >
   <table class="table table-borderless table-responsive-lg mb-0">
     <thead>
@@ -90,5 +94,4 @@
 <div *ngIf="products != null && products.length == 0">
   <div class="alert alert-warning text-center mt-4"><b>No results</b></div>
 </div>
-
 <!-- search result end -->

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
 import { Product } from '../interfaces/product';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { AmountType } from '../interfaces/amount-type';
@@ -12,12 +12,6 @@ import { AmountType } from '../interfaces/amount-type';
 })
 export class ProductService {
   constructor(private afs: AngularFirestore) {}
-
-  getAmountType(amount: number): AmountType {
-    if (amount >= 20) return AmountType.InStock;
-    if (amount >= 1) return AmountType.NearlyOutOfStock;
-    return AmountType.OutOfStock;
-  }
 
   async create(product: Product) {
     try {
@@ -108,6 +102,39 @@ export class ProductService {
       console.log(error);
     }
   }
+
+  getAmountType(amount: number): AmountType {
+    if (amount >= 20) return AmountType.InStock;
+    if (amount >= 1) return AmountType.NearlyOutOfStock;
+    return AmountType.OutOfStock;
+  }
+
+  async search(filter: Object): Promise<any[]> {
+    try {
+      const results = await this.afs
+        .collection('products', (ref) => {
+          ref.where('category', 'in', filter['cat']);
+          const newRef = this.buildRefOnAmountType(ref, filter['amount']);
+
+          return newRef;
+        })
+        .valueChanges({ idField: 'id' })
+        .pipe(take(1))
+        .toPromise();
+      return results;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private buildRefOnAmountType(
+    ref: CollectionReference,
+    type: AmountType
+  ): CollectionReference | firebase.firestore.Query {
+    if (type == AmountType.All) return ref.orderBy('createDate', 'desc');
+    else if (type == AmountType.InStock) return ref.where('amount', '>=', 20);
+    else if (type == AmountType.NearlyOutOfStock)
+      return ref.where('amount', '>', 0).where('amount', '<', 20);
+    else if (type == AmountType.OutOfStock) return ref.where('amount', '==', 0);
+  }
 }
-
-

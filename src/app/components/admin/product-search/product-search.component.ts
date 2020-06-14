@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { take } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
 import { AmountType } from 'src/app/interfaces/amount-type';
 import { Router } from '@angular/router';
+import { LoadingBarService } from 'src/app/services/loading-bar.service';
 
 @Component({
   selector: 'app-product-search',
@@ -12,12 +11,13 @@ import { Router } from '@angular/router';
 })
 export class ProductSearchComponent implements OnInit {
   categories: string[];
+  amountType: AmountType = AmountType.All;
   products: any[];
 
   constructor(
-    private afs: AngularFirestore,
     private productSv: ProductService,
-    private router: Router
+    private router: Router,
+    private loadingSv: LoadingBarService
   ) {}
 
   ngOnInit(): void {}
@@ -27,13 +27,16 @@ export class ProductSearchComponent implements OnInit {
   }
 
   async search() {
-    this.products = await this.afs
-      .collection('products', (ref) =>
-        ref.where('category', 'in', this.categories)
-      )
-      .valueChanges({ idField: 'id' })
-      .pipe(take(1))
-      .toPromise();
+    this.loadingSv.on();
+    this.products = await this.productSv.search({
+      cat: this.categories,
+      amount: this.amountType,
+    });
+    this.loadingSv.off();
+  }
+
+  onSelectAmountType(data: string) {
+    this.amountType = AmountType[data];
   }
 
   getAmountClass(amount: number): Object {
