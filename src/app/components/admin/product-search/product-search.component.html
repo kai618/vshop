@@ -1,6 +1,6 @@
-<div>
+<div class="row">
   <!-- category multi-option modal start -->
-  <app-multi-select-cat></app-multi-select-cat>
+  <app-multi-select-cat (select)="onSelectCats($event)"></app-multi-select-cat>
   <!-- category multi-option modal end -->
 
   <!-- amount type start -->
@@ -37,5 +37,58 @@
   <!-- title keyword input end -->
 
   <!-- search button -->
-  <button class="btn btn-success">Search</button>
+  <button class="btn btn-success" (click)="search()">Search</button>
 </div>
+
+<!-- search result start -->
+<div
+  *ngIf="products != null && products.length > 0"
+  class="row border rounded mt-4"
+>
+  <table class="table table-borderless table-responsive-lg mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Time</th>
+        <th style="width: 10%;">Settings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let p of products; let i = index"
+        [ngClass]="getAmountClass(p.amount)"
+      >
+        <td>{{ i + 1 }}</td>
+        <td>{{ p.title }}</td>
+        <td>{{ p.price | currency: "USD" }}</td>
+        <td
+          [ngClass]="{
+            'font-weight-bold': p.amount == 0
+          }"
+        >
+          {{ p.amount }}
+        </td>
+        <td
+          data-toggle="tooltip"
+          [title]="p.createDate | date: 'HH:mm - dd/MM/yyyy'"
+        >
+          {{ p.createDate | date: "dd/MM/yy" }}
+        </td>
+        <td>
+          <button class="btn btn-sm btn-light" (click)="toEditPage(p.id)">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="products != null && products.length == 0">
+  <div class="alert alert-warning text-center mt-4"><b>No results</b></div>
+</div>
+
+<!-- search result end -->

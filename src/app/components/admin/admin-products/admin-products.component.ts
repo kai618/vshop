@@ -31,7 +31,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.productSv
       .getAll()
       .pipe(take(1))
-      .subscribe(() => this.loadingSv.off());
+      .toPromise()
+      .then(() => this.loadingSv.off());
   }
 
   ngOnDestroy() {

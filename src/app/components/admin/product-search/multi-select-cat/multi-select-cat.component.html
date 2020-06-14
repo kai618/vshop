@@ -24,15 +24,17 @@
     </span>
   </div>
   <div class="modal-body">
-    <div class="custom-control custom-checkbox">
+    <!-- <div class="custom-control custom-checkbox">
       <input
         type="checkbox"
         class="custom-control-input"
         id="all"
         value="null"
+        [checked]="checks['all']"
+        (click)="checkAll('all')"
       />
       <label class="custom-control-label" for="all">All Categories</label>
-    </div>
+    </div> -->
 
     <div class="custom-control custom-checkbox" *ngFor="let cat of categories">
       <input
@@ -40,19 +42,39 @@
         class="custom-control-input"
         [id]="cat.id"
         [value]="cat.id"
+        [checked]="checks[cat.id]"
+        (click)="check(cat.id)"
       />
       <label class="custom-control-label" [for]="cat.id">{{ cat.name }}</label>
     </div>
   </div>
 
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-sm btn-outline-success"
-      (click)="modal.close(true)"
-    >
-      Accept
-    </button>
+    <div class="d-flex justify-content-between">
+      <div style="flex: 1;">
+        <button
+          type="button"
+          class="btn btn-sm btn-light mr-1"
+          (click)="selectAll()"
+        >
+          All</button
+        ><button
+          type="button"
+          class="btn btn-sm btn-light"
+          (click)="selectNone()"
+        >
+          None
+        </button>
+      </div>
+      <button
+        type="button"
+        class="btn btn-sm btn-success"
+        (click)="modal.close(true)"
+        [disabled]="!valid"
+      >
+        Accept
+      </button>
+    </div>
   </div>
 </ng-template>
 <!-- Modal end -->
