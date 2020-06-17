@@ -97,7 +97,7 @@ export class MultiSelectCatComponent implements OnInit, OnDestroy {
   }
 
   selectAll() {
-    const els = document.getElementsByClassName('custom-control-input');
+    const els = document.getElementsByClassName('multi-checkbox');
     for (let i = 0; i < els.length; i++) {
       els[i]['checked'] = true;
       this.preChecks[els[i].id] = true;
@@ -106,7 +106,7 @@ export class MultiSelectCatComponent implements OnInit, OnDestroy {
   }
 
   selectNone() {
-    const els = document.getElementsByClassName('custom-control-input');
+    const els = document.getElementsByClassName('multi-checkbox');
     for (let i = 0; i < els.length; i++) {
       els[i]['checked'] = false;
       this.preChecks[els[i].id] = false;
