@@ -4,4 +4,5 @@ export interface Filter {
   categories: string[];
   amountType: AmountType;
   keyword?: string;
+  price?: number[];
 }

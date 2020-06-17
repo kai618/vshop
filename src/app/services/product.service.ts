@@ -122,6 +122,19 @@ export class ProductService {
         .pipe(take(1))
         .toPromise();
 
+      // price
+      if (filter.price) {
+        if (filter.price[0] == filter.price[1]) {
+          results = results.filter((p) => p['price'] == filter.price[0]);
+        } else if (filter.price[0] < filter.price[1]) {
+          results = results.filter(
+            (p) =>
+              p['price'] >= filter.price[0] && p['price'] <= filter.price[1]
+          );
+        }
+      }
+
+      // keyword
       if (filter.keyword) {
         results = results.filter((p) =>
           p['title'].toLowerCase().includes(filter.keyword.toLowerCase())

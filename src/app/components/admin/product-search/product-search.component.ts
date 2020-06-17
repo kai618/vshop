@@ -39,6 +39,7 @@ export class ProductSearchComponent implements OnInit {
       categories: this.categories,
       amountType: this.amountType,
       keyword: this.keyword,
+      price: this.priceEnabled ? [this.min, this.max] : null,
     });
     this.loadingSv.off();
   }
