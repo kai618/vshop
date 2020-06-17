@@ -2,4 +2,6 @@ FIXME: the latest user info is not updated after the user auto logging in succes
 
 FIXME: admins and uses tables are not responsive at large-size break points
 
+FIXME: error chrome-polyfill.js
+
 TODO: use global toasts of ngBootstrap

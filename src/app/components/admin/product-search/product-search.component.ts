@@ -17,6 +17,10 @@ export class ProductSearchComponent implements OnInit {
   amountType: AmountType = AmountType.All;
   keyword: string;
 
+  priceEnabled: boolean = false;
+  min: number = 0;
+  max: number = 100;
+
   constructor(
     private productSv: ProductService,
     private router: Router,
@@ -52,5 +56,15 @@ export class ProductSearchComponent implements OnInit {
 
   toEditPage(id: string) {
     this.router.navigate(['admin/products', id]);
+  }
+
+  onMinChange(val: string) {
+    this.min = Number(val);
+    if (this.max < this.min) this.max = this.min;
+  }
+
+  onMaxChange(val: string) {
+    this.max = Number(val);
+    if (this.min > this.max) this.min = this.max;
   }
 }

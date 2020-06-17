@@ -24,10 +24,41 @@
   <!-- price start -->
   <div class="input-group mb-3 col-12 col-md-6 px-0">
     <div class="input-group-prepend">
-      <span class="input-group-text">Price</span>
+      <span class="input-group-text">
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="price-checkbox"
+            [(ngModel)]="priceEnabled"
+          />
+          <label class="custom-control-label" for="price-checkbox">Price</label>
+        </div>
+      </span>
+      <span class="input-group-text">$</span>
     </div>
-    <input type="number" class="form-control" placeholder="Min" />
-    <input type="number" class="form-control" placeholder="Max" />
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Min"
+      min="0"
+      step="1"
+      [value]="priceEnabled ? min : null"
+      (blur)="onMinChange($event.target.value)"
+      (keydown.enter)="onMinChange($event.target.value)"
+      [disabled]="!priceEnabled"
+    />
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Max"
+      min="0"
+      step="1"
+      [value]="priceEnabled ? max : null"
+      (blur)="onMaxChange($event.target.value)"
+      (keydown.enter)="onMaxChange($event.target.value)"
+      [disabled]="!priceEnabled"
+    />
   </div>
   <!-- price end -->
 
@@ -47,7 +78,9 @@
     <!-- title keyword input end -->
 
     <!-- search button start-->
-    <button class="btn btn-success mb-3" (click)="search()">Search</button>
+    <button class="btn btn-success mb-3" (click)="search()" [disabled]="!valid">
+      Search
+    </button>
     <!-- search button end-->
   </div>
 </div>
