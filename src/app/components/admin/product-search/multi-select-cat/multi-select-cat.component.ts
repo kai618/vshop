@@ -82,7 +82,9 @@ export class MultiSelectCatComponent implements OnInit, OnDestroy {
           this.select.emit(this.selectedIds);
         }
       },
-      () => {}
+      () => {
+        this.preChecks = { ...this.checks };
+      }
     );
   }
 

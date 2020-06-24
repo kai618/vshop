@@ -63,7 +63,7 @@ export class NewProductFormComponent implements OnInit {
       createDate: Date.now(),
     });
     this.loadingSv.off();
-    this.router.navigate(['/admin/products']);
+    this.router.navigate(['/admin']);
   }
 }
 
