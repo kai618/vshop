@@ -1,16 +1,82 @@
 <div class="side-bar shadow-sm">
   <div *ngIf="isManager">
-    <div class="title">Members</div>
+    <div class="title">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/user.png"
+          alt=""
+        />
+        <div class="text">
+          Members
+        </div>
+      </div>
+    </div>
     <div class="divider"></div>
-    <a routerLink="/manager" class="action">Dashboard</a>
+    <a routerLink="/manager" class="action">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/dashboard.png"
+          alt=""
+        />
+        <div class="text">
+          Dashboard
+        </div>
+      </div>
+    </a>
     <div style="height: 100px;"></div>
   </div>
 
   <div *ngIf="isAdmin">
-    <div class="title">Products</div>
+    <div class="title">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/box.png"
+          alt=""
+        />
+        <div class="text">
+          Products
+        </div>
+      </div>
+    </div>
     <div class="divider"></div>
-    <a routerLink="/admin" class="action">Dashboard</a>
-    <a routerLink="/admin/products/search" class="action">Search</a>
-    <a routerLink="/admin/products/new" class="action">Add New</a>
+    <a routerLink="/admin" class="action">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/dashboard.png"
+          alt=""
+        />
+        <div class="text">
+          Dashboard
+        </div>
+      </div>
+    </a>
+    <a routerLink="/admin/products/search" class="action">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/search.png"
+          alt=""
+        />
+        <div class="text">
+          Search
+        </div>
+      </div>
+    </a>
+    <a routerLink="/admin/products/new" class="action">
+      <div class="d-flex align-items-center">
+        <img
+          class="side-bar-icon mr-2"
+          src="../../../assets/side_bar/add.png"
+          alt=""
+        />
+        <div class="text">
+          Add New
+        </div>
+      </div>
+    </a>
   </div>
 </div>

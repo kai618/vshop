@@ -7,14 +7,14 @@
 }
 
 .title {
-  margin: 0px 20px;
+  margin: 6px 15px;
   font-size: 20px;
   font-weight: bold;
-  color: white;
+  color: #84aa86;
 }
 
 .action {
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 15px;
   color: white;
   text-decoration: none;
@@ -28,4 +28,18 @@
   height: 1px;
   width: 100%;
   border-top: 3px solid white;
+}
+
+.side-bar-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+  .side-bar {
+    width: 50px;
+  }
+  .text {
+    display: none;
+  }
 }
